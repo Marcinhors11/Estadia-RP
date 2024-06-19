@@ -22,9 +22,9 @@ class DocenteMaterialController extends Controller
     public function index()
     {
         // Obtener el docente autenticado
-        $docente = Auth::guard('docente')->user();
+        $user = Auth::guard('docente')->user();
         // Filtrar los materiales por el docente_id del usuario autenticado
-        $materials = Material::where('docente_id', $docente->id)->with('autor')->get();
+        $materials = Material::where('docente_id', $user->id)->with('autor')->get();
         return view('docentes.materials.index', compact('materials'));
     }
 
