@@ -1,0 +1,7 @@
+header .container{
+    background-color: #f8f8f8;
+}
+
+.container h1, h4{
+    color: #8a2036;
+}
