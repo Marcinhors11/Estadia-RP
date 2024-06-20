@@ -19,9 +19,8 @@
             </div>
         @endif
 
-        <form
-            action="{{ route('docente.materials.store') }}"
-            method="POST" enctype="multipart/form-data" class="justify-content-center">
+        <form action="{{ route('docentes.materials.store') }}" method="POST" enctype="multipart/form-data"
+            class="justify-content-center">
             @csrf
 
             <div class="row">
@@ -42,7 +41,8 @@
                                 {{ $autor->apellido_materno }}</option>
                         @endforeach
                     </select>
-                    <a href="{{ route('autores.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo Autor</a>
+                    <a href="{{ route('docentes.autores.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo
+                        Autor</a>
                 </div>
 
                 <!--  Box Date  -->
@@ -94,7 +94,7 @@
                 <!--  Box Imagen  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="imagen">Imagen Previsualización</label>
-                    <input type="file" class="form-control-file form-control-sm" id="imagen" name="imagen">
+                    <input type="file" id="imagen" name="imagen" class="form-control">
                 </div>
 
                 <!--  Box Tema  -->
@@ -137,15 +137,16 @@
                 </div>
 
                 <!--  Box Archivo  -->
-                <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="archivo">Archivo</label>
-                    <input type="file" class="form-control-file form-control-sm" id="archivo" name="archivo">
+                <div class="form-group col-md-4 m-auto mt-3 p-3" id="archivo-group" style="display:none;">
+                    <label for="archivo">Archivo (PDF o Presentación)</label>
+                    <input type="file" name="archivo" id="archivo" class="form-control">
                 </div>
 
+
                 <!--  Box Enlace  -->
-                <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="enlace">Enlace</label>
-                    <input type="url" class="form-control" id="enlace" name="enlace"
+                <div class="form-group col-md-4 m-auto mt-3 p-3" id="enlace-group" style="display:none;">
+                    <label for="enlace">Enlace (YouTube)</label>
+                    <input type="url" name="enlace" id="enlace" class="form-control"
                         value="{{ old('enlace') }}">
                 </div>
             </div>
@@ -156,4 +157,33 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var tipoContenido = document.getElementById('tipo_contenido');
+            var archivoGroup = document.getElementById('archivo-group');
+            var enlaceGroup = document.getElementById('enlace-group');
+
+            function toggleFields() {
+                var selectedOption = tipoContenido.options[tipoContenido.selectedIndex].text;
+                if (selectedOption === 'PDF' || selectedOption === 'Presentación') {
+                    archivoGroup.style.display = 'block';
+                    enlaceGroup.style.display = 'none';
+                } else if (selectedOption === 'Enlace') {
+                    archivoGroup.style.display = 'none';
+                    enlaceGroup.style.display = 'block';
+                } else {
+                    archivoGroup.style.display = 'none';
+                    enlaceGroup.style.display = 'none';
+                }
+            }
+
+            tipoContenido.addEventListener('change', toggleFields);
+
+            // Run on initial load
+            toggleFields();
+        });
+    </script>
 @endsection

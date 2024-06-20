@@ -1,14 +1,14 @@
-Write-Output "Iniciando configuraci�n del proyecto..."
+Write-Output "Iniciando configuración del proyecto..."
 
-# Instalaci�n de dependencias con Composer
+# Instalación de dependencias con Composer
 Write-Output "Instalando dependencias con Composer..."
 composer install
 
-# Configuraci�n de variables de entorno
+# Configuración de variables de entorno
 Copy-Item .env.example .env
 php artisan key:generate
 
-# Crear enlace simb�lico para el almacenamiento
+# Crear enlace simbólico para el almacenamiento
 php artisan storage:link
 
-Write-Output "Configuraci�n completa."
+Write-Output "Configuración completa."
