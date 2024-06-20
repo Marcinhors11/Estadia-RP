@@ -6,12 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\Alumno;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Academia;
+use App\Models\Asignatura;
+use App\Models\Material;
+use App\Models\Autor;
+use App\Models\Docente;
+use App\Models\TipoContenido;
 
 class AlumnoController extends Controller
 {
     public function showRegistrationForm()
     {
-        return view('alumnos.register');
+        return view('alumno.register');
     }
 
     public function register(Request $request)
@@ -45,6 +51,60 @@ class AlumnoController extends Controller
             'correo' => $data['correo'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    //############################################## Indice Contenido Control ##########################################
+    public function indexContenido()
+    {
+        $autores = Autor::all();
+        $academias = Academia::all();
+        $asignaturas = Asignatura::all();
+        $tiposContenido = TipoContenido::all();
+        $docentes = Docente::all();
+        $fechas = Material::selectRaw('DATE(created_at) as date')->groupBy('date')->pluck('date');
+        return view('alumno.contenido.index', compact('autores', 'academias', 'asignaturas', 'tiposContenido', 'docentes', 'fechas'));
+    }
+
+    public function contenidoPorAutor(Autor $autor)
+    {
+        $materiales = Material::where('autor_id', $autor->id)->get();
+        return view('alumno.contenido.lista', compact('materiales', 'autor'));
+    }
+
+    public function contenidoPorAcademia(Academia $academia)
+    {
+        $materiales = Material::where('academia_id', $academia->id)->get();
+        return view('alumno.contenido.lista', compact('materiales', 'academia'));
+    }
+
+    public function contenidoPorAsignatura(Asignatura $asignatura)
+    {
+        $materiales = Material::where('asignatura_id', $asignatura->id)->get();
+        return view('alumno.contenido.lista', compact('materiales', 'asignatura'));
+    }
+
+    public function contenidoPorTipo(TipoContenido $tipoContenido)
+    {
+        $materiales = Material::where('tipo_contenido_id', $tipoContenido->id)->get();
+        return view('alumno.contenido.lista', compact('materiales', 'tipoContenido'));
+    }
+
+    public function contenidoPorDocente(Docente $docente)
+    {
+        $materiales = Material::where('docente_id', $docente->id)->get();
+        return view('alumno.contenido.lista', compact('materiales', 'docente'));
+    }
+
+    public function contenidoPorFecha($fecha)
+    {
+        $materiales = Material::whereDate('created_at', $fecha)->get();
+        return view('alumno.contenido.materiales', compact('materiales'));
+    }
+
+    public function show($id)
+    {
+        $materiales = Material::with('autor')->findOrFail($id);
+        return view('alumno.contenido.show', compact('materiales'));
     }
 
     /*

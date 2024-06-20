@@ -109,7 +109,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page"
-                            href="{{ route('alumnos.system.home') }}">Inicio</a>
+                            href="{{ route('alumno.system.home') }}">Inicio</a>
                     </li>
 
                     <li class="nav-item dropdown">

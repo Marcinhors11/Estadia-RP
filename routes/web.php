@@ -15,6 +15,7 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\TipoContenidoController;
 use App\Http\Controllers\AdminAutorController;
 use App\Http\Controllers\DocenteAutorController;
+use App\Models\Alumno;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +39,17 @@ Route::post('alumnos/register', [AlumnoController::class, 'register']);
 Route::middleware(['auth:alumno'])->group(function () {
     // Rutas protegidas para alumnos
     Route::get('repository/inicio', function () {
-        return view('alumnos.system.home');
-    })->name('alumnos.system.home');
+        return view('alumno.system.home');
+    })->name('alumno.system.home');
+
+    Route::get('contenido', [AlumnoController::class, 'indexContenido'])->name('alumno.contenido.index');
+    Route::get('contenido/autor/{autor}', [AlumnoController::class, 'contenidoPorAutor'])->name('alumno.contenido.autor');
+    Route::get('contenido/academia/{academia}', [AlumnoController::class, 'contenidoPorAcademia'])->name('alumno.contenido.academia');
+    Route::get('contenido/asignatura/{asignatura}', [AlumnoController::class, 'contenidoPorAsignatura'])->name('alumno.contenido.asignatura');
+    Route::get('contenido/tipo/{tipoContenido}', [AlumnoController::class, 'contenidoPorTipo'])->name('alumno.contenido.tipo');
+    Route::get('contenido/docente/{docente}', [AlumnoController::class, 'contenidoPorDocente'])->name('alumno.contenido.docente');
+    Route::get('contenido/fecha/{fecha}', [AlumnoController::class, 'contenidoPorFecha'])->name('alumno.contenido.fecha');
+    Route::get('contenido/materials/{material}', [AlumnoController::class, 'show'])->name('alumno.contenido.show');
 });
 
 // ####################### Rutas Docente #######################
