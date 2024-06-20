@@ -96,7 +96,7 @@ class AdminMaterialController extends Controller
 
         //Handle Imagen
         if ($request->hasFile('imagen')) {
-            $material->imagen = $request->file('imagen')->store('materiales','public');
+            $material->imagen = $request->file('imagen')->store('materiales', 'public');
         }
 
         // Asignar el ID del usuario autenticado (docente o administrador)
@@ -135,17 +135,19 @@ class AdminMaterialController extends Controller
      * @param  \App\Models\Material  $material
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    // Controlador de Material
+    public function edit(Material $material)
     {
-        $material = Material::with('autor')->findOrFail($id);
-        // Obtener todos los autores y tipos de contenido para mostrarlos en el formulario de creación de material
+        // Obtener todos los autores y tipos de contenidos para mostrarlos en el formulario de edición
         $autores = Autor::all();
         $tipoContenidos = TipoContenido::all();
         $asignaturas = Asignatura::all();
         $idiomas = Idioma::all();
         $academias = Academia::all();
+
         return view('admin.materials.edit', compact('material', 'autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -196,14 +198,14 @@ class AdminMaterialController extends Controller
 
         //Handle Imagen
         if ($request->hasFile('imagen')) {
-            $material->imagen = $request->file('imagen')->store('materiales','public');
+            $material->imagen = $request->file('imagen')->store('materiales', 'public');
         }
 
         // Guardar los cambios en la base de datos
         $material->save();
 
         // Redireccionar a la lista de materiales con un mensaje de éxito
-        return redirect()->route('admin.materials..index')->with('success', 'Material actualizado exitosamente.');
+        return redirect()->route('admin.materials.index')->with('success', 'Material actualizado exitosamente.');
     }
 
     /**
@@ -226,7 +228,7 @@ class AdminMaterialController extends Controller
         // Eliminar todas las solicitudes de baja relacionadas con este material
         SolicitudBaja::where('material_id', $id)->delete();
 
-        $material->delete();
+        $material->delete(); // Esto ejecutará una eliminación suave
 
         return redirect()->route('admin.materials.index')->with('success', 'Material eliminado exitosamente.');
     }

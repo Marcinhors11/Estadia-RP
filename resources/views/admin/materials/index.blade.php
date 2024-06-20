@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Materiales Registrados (Administrador)</h1>
+        <h1>Materiales Registrados</h1>
 
         @if (session('success'))
             <div class="alert alert-success col-md-6 m-auto mt-3">
@@ -22,8 +22,8 @@
             <thead>
                 <tr>
                     <th>Título</th>
-                    <th>Autor</th>
-                    <th>Creado por</th>
+                    <th>Subido por</th>
+                    <th>Material estatus</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -31,7 +31,6 @@
                 @foreach ($materials as $material)
                     <tr>
                         <td>{{ $material->titulo }}</td>
-                        <td>{{ $material->autor->nombre_autor }} {{ $material->autor->apellido_paterno }} {{ $material->autor->apellido_materno }}</td>
                         <td>
                             @if($material->docente)
                                 {{ $material->docente->nombre_docente }} {{ $material->docente->apellido_paterno }} {{ $material->docente->apellido_materno }}
@@ -39,6 +38,7 @@
                                 {{ $material->administrador->nombre_admin }} {{ $material->administrador->apellido_paterno }} {{ $material->administrador->apellido_materno }}
                             @endif
                         </td>
+                        <td>{{ $material->estatus_material ? 'Activo' : 'Inactivo' }}</td>
                         <td>
                             <a href="{{ route('admin.materials.show', $material->id) }}" class="btn btn-info">Ver</a>
                             <a href="{{ route('admin.materials.edit', $material->id) }}" class="btn btn-warning">Editar</a>

@@ -131,13 +131,13 @@ class DocenteMaterialController extends Controller
      */
     public function edit($id)
     {
-        // Obtener todos los autores y tipos de contenido para mostrarlos en el formulario de creación de material
+        $material = Material::findOrFail($id);
         $autores = Autor::all();
         $tipoContenidos = TipoContenido::all();
         $asignaturas = Asignatura::all();
         $idiomas = Idioma::all();
         $academias = Academia::all();
-        // Pasar ambas variables a la vista
+
         return view('docentes.materials.edit', compact('material', 'autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias'));
     }
 
