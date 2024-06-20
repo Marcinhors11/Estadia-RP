@@ -22,8 +22,8 @@
             <thead>
                 <tr>
                     <th>Título</th>
-                    <th>Autor</th>
-                    <th>Creado por</th>
+                    <th>Subido por</th>
+                    <th>Material estatus</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -31,8 +31,8 @@
                 @foreach ($materials as $material)
                     <tr>
                         <td>{{ $material->titulo }}</td>
-                        <td>{{ $material->autor->nombre_autor }} {{ $material->autor->apellido_paterno }} {{ $material->autor->apellido_materno }}</td>
                         <td>{{ $material->docente->nombre_docente }} {{ $material->docente->apellido_paterno }} {{ $material->docente->apellido_materno }}</td>
+                        <td>{{ $material->estatus_material ? 'Activo' : 'Inactivo' }}</td>
                         <td>
                             <a href="{{ route('docentes.materials.show', $material->id) }}" class="btn btn-info">Ver</a>
                             <a href="{{ route('docentes.materials.edit', $material->id) }}" class="btn btn-warning">Editar</a>
