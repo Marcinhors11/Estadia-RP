@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="position-relative">
-            <a href="{{ route('alumno.system.home') }}" class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
+            <a href="{{ route('docentes.system.home') }}" class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
         </div>
         <h1>Detalle del Recurso</h1>
         <h3>{{ $materiales->titulo }}</h3>

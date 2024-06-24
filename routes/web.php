@@ -14,8 +14,10 @@ use App\Http\Controllers\IdiomaController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\TipoContenidoController;
 use App\Http\Controllers\AdminAutorController;
+use App\Http\Controllers\AdminContenidoController;
 use App\Http\Controllers\DocenteAutorController;
-use App\Models\Alumno;
+use App\Http\Controllers\AlumnoContenidoController;
+use App\Http\Controllers\DocenteContenidoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,18 +40,17 @@ Route::post('alumnos/register', [AlumnoController::class, 'register']);
 
 Route::middleware(['auth:alumno'])->group(function () {
     // Rutas protegidas para alumnos
-    Route::get('repository/inicio', function () {
-        return view('alumno.system.home');
-    })->name('alumno.system.home');
+    Route::get('repository/inicio', [AlumnoContenidoController::class, 'home'])->name('alumno.system.home');
 
-    Route::get('contenido', [AlumnoController::class, 'indexContenido'])->name('alumno.contenido.index');
-    Route::get('contenido/autor/{autor}', [AlumnoController::class, 'contenidoPorAutor'])->name('alumno.contenido.autor');
-    Route::get('contenido/academia/{academia}', [AlumnoController::class, 'contenidoPorAcademia'])->name('alumno.contenido.academia');
-    Route::get('contenido/asignatura/{asignatura}', [AlumnoController::class, 'contenidoPorAsignatura'])->name('alumno.contenido.asignatura');
-    Route::get('contenido/tipo/{tipoContenido}', [AlumnoController::class, 'contenidoPorTipo'])->name('alumno.contenido.tipo');
-    Route::get('contenido/docente/{docente}', [AlumnoController::class, 'contenidoPorDocente'])->name('alumno.contenido.docente');
-    Route::get('contenido/fecha/{fecha}', [AlumnoController::class, 'contenidoPorFecha'])->name('alumno.contenido.fecha');
-    Route::get('contenido/materials/{material}', [AlumnoController::class, 'show'])->name('alumno.contenido.show');
+    //Rutas Indice Contenido
+    Route::get('alumno/contenido', [AlumnoContenidoController::class, 'indexContenido'])->name('alumno.contenido.index');
+    Route::get('alumno/contenido/academia/{academia}', [AlumnoContenidoController::class, 'contenidoPorAcademia'])->name('alumno.contenido.academia');
+    Route::get('alumno/contenido/autor/{autor}', [AlumnoContenidoController::class, 'contenidoPorAutor'])->name('alumno.contenido.autor');
+    Route::get('alumno/contenido/asignatura/{asignatura}', [AlumnoContenidoController::class, 'contenidoPorAsignatura'])->name('alumno.contenido.asignatura');
+    Route::get('alumno/contenido/tipo/{tipoContenido}', [AlumnoContenidoController::class, 'contenidoPorTipo'])->name('alumno.contenido.tipo');
+    Route::get('alumno/contenido/docente/{docente}', [AlumnoContenidoController::class, 'contenidoPorDocente'])->name('alumno.contenido.docente');
+    Route::get('alumno/contenido/fecha/{fecha}', [AlumnoContenidoController::class, 'contenidoPorFecha'])->name('alumno.contenido.fecha');
+    Route::get('alumno/contenido/materials/{material}', [AlumnoContenidoController::class, 'show'])->name('alumno.contenido.show');
 });
 
 // ####################### Rutas Docente #######################
@@ -58,9 +59,17 @@ Route::post('docentes/register', [DocenteController::class, 'register'])->name('
 
 Route::middleware(['auth:docente'])->group(function () {
     // Rutas protegidas para docente
-    Route::get('docente/inicio', function () {
-        return view('docentes.system.home');
-    })->name('docentes.system.home');
+    Route::get('docente/inicio', [DocenteContenidoController::class, 'home'])->name('docentes.system.home');
+
+    //Rutas Indice Contenido
+    Route::get('docente/contenido', [DocenteContenidoController::class, 'indexContenido'])->name('docentes.contenido.index');
+    Route::get('docente/contenido/autor/{autor}', [DocenteContenidoController::class, 'contenidoPorAutor'])->name('docentes.contenido.autor');
+    Route::get('docente/contenido/academia/{academia}', [DocenteContenidoController::class, 'contenidoPorAcademia'])->name('docentes.contenido.academia');
+    Route::get('docente/contenido/asignatura/{asignatura}', [DocenteContenidoController::class, 'contenidoPorAsignatura'])->name('docentes.contenido.asignatura');
+    Route::get('docente/contenido/tipo/{tipoContenido}', [DocenteContenidoController::class, 'contenidoPorTipo'])->name('docentes.contenido.tipo');
+    Route::get('docente/contenido/docente/{docente}', [DocenteContenidoController::class, 'contenidoPorDocente'])->name('docentes.contenido.docente');
+    Route::get('docente/contenido/fecha/{fecha}', [DocenteContenidoController::class, 'contenidoPorFecha'])->name('docentes.contenido.fecha');
+    Route::get('docente/contenido/materials/{material}', [DocenteContenidoController::class, 'show'])->name('docentes.contenido.show');
 
     // Rutas para materiales de docentes
     Route::get('docente/materials', [DocenteMaterialController::class, 'index'])->name('docentes.materials.index');
@@ -86,9 +95,18 @@ Route::get('admin/register', [AdminController::class, 'showRegistrationForm'])->
 Route::post('admin/register', [AdminController::class, 'register'])->name('admin.register');
 
 Route::middleware(['auth:administrador'])->group(function () {
-    Route::get('admin/inicio', function () {
-        return view('admin.system.home');
-    })->name('admin.system.home');
+
+    Route::get('admin/inicio', [AdminContenidoController::class, 'home'])->name('admin.system.home');
+
+    //Rutas Indice Contenido
+    Route::get('admin/contenido', [AdminContenidoController::class, 'indexContenido'])->name('admin.contenido.index');
+    Route::get('admin/contenido/autor/{autor}', [AdminContenidoController::class, 'contenidoPorAutor'])->name('admin.contenido.autor');
+    Route::get('admin/contenido/academia/{academia}', [AdminContenidoController::class, 'contenidoPorAcademia'])->name('admin.contenido.academia');
+    Route::get('admin/contenido/asignatura/{asignatura}', [AdminContenidoController::class, 'contenidoPorAsignatura'])->name('admin.contenido.asignatura');
+    Route::get('admin/contenido/tipo/{tipoContenido}', [AdminContenidoController::class, 'contenidoPorTipo'])->name('admin.contenido.tipo');
+    Route::get('admin/contenido/docente/{docente}', [AdminContenidoController::class, 'contenidoPorDocente'])->name('admin.contenido.docente');
+    Route::get('admin/contenido/fecha/{fecha}', [AdminContenidoController::class, 'contenidoPorFecha'])->name('admin.contenido.fecha');
+    Route::get('admin/contenido/materials/{material}', [AdminContenidoController::class, 'show'])->name('admin.contenido.show');
 
     //Rutas Validación Docente
     Route::get('admin/validate-docentes', [AdminController::class, 'index'])->name('admin.system.validate-docentes');

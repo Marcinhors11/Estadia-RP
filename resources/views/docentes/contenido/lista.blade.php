@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="position-relative">
-            <a href="{{ route('alumno.system.home') }}"
+            <a href="{{ route('docentes.system.home') }}"
                 class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
         </div>
         <h2>Materiales de
@@ -34,7 +34,7 @@
                         <td>{{ $material->autor->nombre_autor }} {{ $material->autor->apellido_paterno }} {{ $material->autor->apellido_materno }}</td>
                         <td>{{ $material->tipoContenido->nombre_contenido }}</td>
                         <td>
-                            <a href="{{ route('alumno.contenido.show', $material->id) }}" class="btn btn-info">Ver</a>
+                            <a href="{{ route('docentes.contenido.show', $material->id) }}" class="btn btn-info">Ver</a>
                         </td>
                     </tr>
                 @endforeach

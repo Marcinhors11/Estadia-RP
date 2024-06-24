@@ -16,7 +16,7 @@
                     <div id="collapseAutor{{ $autor->id }}" class="accordion-collapse collapse"
                         aria-labelledby="headingAutor{{ $autor->id }}" data-bs-parent="#accordionAutores">
                         <div class="accordion-body">
-                            <a href="{{ route('alumno.contenido.autor', $autor->id) }}"
+                            <a href="{{ route('admin.contenido.autor', $autor->id) }}"
                                 class="btn btn-secondary btn-sm">Ver Materiales</a>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     <div id="collapseAcademia{{ $academia->id }}" class="accordion-collapse collapse"
                         aria-labelledby="headingAcademia{{ $academia->id }}" data-bs-parent="#accordionAcademias">
                         <div class="accordion-body">
-                            <a href="{{ route('alumno.contenido.academia', $academia->id) }}"
+                            <a href="{{ route('admin.contenido.academia', $academia->id) }}"
                                 class="btn btn-secondary btn-sm">Ver Materiales</a>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         aria-labelledby="headingAsignatura{{ $asignatura->id }}"
                         data-bs-parent="#accordionAsignaturas">
                         <div class="accordion-body">
-                            <a href="{{ route('alumno.contenido.asignatura', $asignatura->id) }}"
+                            <a href="{{ route('admin.contenido.asignatura', $asignatura->id) }}"
                                 class="btn btn-secondary btn-sm">Ver Materiales</a>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                         aria-labelledby="headingTipoContenido{{ $tipoContenido->id }}"
                         data-bs-parent="#accordionTiposContenido">
                         <div class="accordion-body">
-                            <a href="{{ route('alumno.contenido.tipo', $tipoContenido->id) }}"
+                            <a href="{{ route('admin.contenido.tipo', $tipoContenido->id) }}"
                                 class="btn btn-secondary btn-sm">Ver Materiales</a>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                     <div id="collapseDocente{{ $docente->id }}" class="accordion-collapse collapse"
                         aria-labelledby="headingDocente{{ $docente->id }}" data-bs-parent="#accordionDocentes">
                         <div class="accordion-body">
-                            <a href="{{ route('alumno.contenido.docente', $docente->id) }}"
+                            <a href="{{ route('admin.contenido.docente', $docente->id) }}"
                                 class="btn btn-secondary btn-sm">Ver Materiales</a>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                         aria-labelledby="headingFecha{{ $fecha }}"
                         data-bs-parent="#accordionFechasPublicacion">
                         <div class="accordion-body">
-                            <a href="{{ route('alumno.contenido.fecha', $fecha) }}"
+                            <a href="{{ route('admin.contenido.fecha', $fecha) }}"
                                 class="btn btn-secondary btn-sm">Ver Materiales</a>
                         </div>
                     </div>
