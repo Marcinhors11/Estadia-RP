@@ -29,7 +29,8 @@
                             Materiales
                         </a>
                         <div class="dropdown-menu" aria-labelledby="materialesDropdown">
-                            <a class="dropdown-item" href="{{ route('admin.materials.index') }}">Consultar Materiales</a>
+                            <a class="dropdown-item" href="{{ route('admin.materials.index') }}">Consultar
+                                Materiales</a>
                             <a class="dropdown-item" href="{{ route('admin.materials.create') }}">Agregar Nuevo
                                 Material</a>
                         </div>
@@ -41,7 +42,8 @@
                             Bajas de Material
                         </a>
                         <div class="dropdown-menu" aria-labelledby="validarDropdown">
-                            <a class="dropdown-item" href="{{ route('admin.materials.solicitudes_baja') }}">Solicitudes de baja de materiales</a>
+                            <a class="dropdown-item" href="{{ route('admin.materials.solicitudes_baja') }}">Solicitudes
+                                de baja de materiales</a>
                         </div>
                     </li>
 
@@ -61,16 +63,15 @@
                             aria-expanded="false">
                             Cuenta
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="cuentaDropdown">
-                            <a class="dropdown-item" href="#">Cambiar
-                                Contraseña</a>
-                        </div>
+                        <ul class="dropdown-menu" aria-labelledby="cuentaDropdown">
+                            <li><a class="dropdown-item" href="{{ route('admin.profile.edit') }}">Editar Perfil</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
 
-        <!--  Docente  -->
-        @elseif  (Auth::guard('docente')->check())
+            <!--  Docente  -->
+        @elseif (Auth::guard('docente')->check())
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -83,7 +84,8 @@
                             Materiales
                         </a>
                         <div class="dropdown-menu" aria-labelledby="materialesDropdown">
-                            <a class="dropdown-item" href="{{ route('docentes.materials.index') }}">Consultar Materiales</a>
+                            <a class="dropdown-item" href="{{ route('docentes.materials.index') }}">Consultar
+                                Materiales</a>
                             <a class="dropdown-item" href="{{ route('docentes.materials.create') }}">Agregar Nuevo
                                 Material</a>
                         </div>
@@ -93,16 +95,16 @@
                             aria-expanded="false">
                             Cuenta
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="cuentaDropdown">
-                            <a class="dropdown-item" href="#">Cambiar
-                                Contraseña</a>
-                        </div>
+                        <ul class="dropdown-menu" aria-labelledby="cuentaDropdown">
+                            <li><a class="dropdown-item" href="{{ route('docentes.profile.edit') }}">Editar Perfil</a>
+                            </li>
+                        </ul>
                     </li>
 
                 </ul>
             </div>
 
-        <!--  Alumno  -->
+            <!--  Alumno  -->
         @elseif (Auth::guard('alumno')->check())
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -118,13 +120,28 @@
                             Cuenta
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="cuentaDropdown">
-                            <li><a class="dropdown-item" href="#">Cambiar
-                                    Contraseña</a></li>
-                            <li><a class="dropdown-item" href="#">Cambiar Email</a></li>
+                            <li><a class="dropdown-item" href="{{ route('alumno.profile.edit') }}">Editar Perfil</a>
+                            </li>
                         </ul>
                     </li>
 
                 </ul>
+            </div>
+            <div>
+                <!-- Navbar content -->
+                <form class="d-flex" action="{{ route('alumno.contenido.search') }}" method="GET">
+                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar"
+                        name="query">
+                    <select class="form-select me-2" name="filter">
+                        <option value="">Todo</option>
+                        <option value="autor">Autor</option>
+                        <option value="docente">Docente</option>
+                        <option value="academia">Academia</option>
+                        <option value="asignatura">Asignatura</option>
+                    </select>
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+
             </div>
         @endif
 

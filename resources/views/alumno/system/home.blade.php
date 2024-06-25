@@ -4,6 +4,22 @@
 
 @section('content')
     <div class="container">
+        <!-- Mostrar los mensajes de error -->
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="jumbotron mt-5">
             <h1 class="display-4 text-center">
                 Bienvenido al Repositorio de la División de Ingeniería en
@@ -21,7 +37,9 @@
         </div>
 
         <!-- Sección de Indice de Contenido -->
-        <div class="mt-5 mb-5">
+        <div class="mt-5">
+            <h2>Índice de Contenido</h2>
+            <hr class="my-4">
             @include('alumno.contenido.index', [
                 'autores' => $autores,
                 'academias' => $academias,

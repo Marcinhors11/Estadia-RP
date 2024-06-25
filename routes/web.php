@@ -17,7 +17,11 @@ use App\Http\Controllers\AdminAutorController;
 use App\Http\Controllers\AdminContenidoController;
 use App\Http\Controllers\DocenteAutorController;
 use App\Http\Controllers\AlumnoContenidoController;
+use App\Http\Controllers\AlumnoProfileController;
 use App\Http\Controllers\DocenteContenidoController;
+use App\Http\Controllers\DocenteProfileController;
+use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\AlumnoBusquedaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +55,14 @@ Route::middleware(['auth:alumno'])->group(function () {
     Route::get('alumno/contenido/docente/{docente}', [AlumnoContenidoController::class, 'contenidoPorDocente'])->name('alumno.contenido.docente');
     Route::get('alumno/contenido/fecha/{fecha}', [AlumnoContenidoController::class, 'contenidoPorFecha'])->name('alumno.contenido.fecha');
     Route::get('alumno/contenido/materials/{material}', [AlumnoContenidoController::class, 'show'])->name('alumno.contenido.show');
+
+    //Rutas Profile
+    Route::get('alumno/profile', [AlumnoProfileController::class, 'edit'])->name('alumno.profile.edit');
+    Route::put('alumno/profile', [AlumnoProfileController::class, 'update'])->name('alumno.profile.update');
+
+    //Rutas Busqueda
+    Route::get('alumno/materials', [AlumnoBusquedaController::class, 'index'])->name('alumno.contenido.search');
+    Route::get('alumno/materials/search', [AlumnoBusquedaController::class, 'search'])->name('alumno.contenido.search');
 });
 
 // ####################### Rutas Docente #######################
@@ -87,6 +99,10 @@ Route::middleware(['auth:docente'])->group(function () {
     //Rutas baja de material
     Route::get('docente/materials/{material}/solicitar_baja', [DocenteMaterialController::class, 'showSolicitudBajaForm'])->name('docentes.materials.solicitar_baja_form');
     Route::post('docente/materials/{material}/solicitar_baja', [DocenteMaterialController::class, 'solicitarBaja'])->name('docentes.materials.solicitar_baja');
+
+    //Rutas Profile
+    Route::get('docente/profile', [DocenteProfileController::class, 'edit'])->name('docentes.profile.edit');
+    Route::put('docente/profile', [DocenteProfileController::class, 'update'])->name('docentes.profile.update');
 });
 
 
@@ -142,4 +158,8 @@ Route::middleware(['auth:administrador'])->group(function () {
     //Rutas de academia
     Route::get('admin/academia/create', [AcademiaController::class, 'create'])->name('academias.create');
     Route::post('admin/academia', [AcademiaController::class, 'store'])->name('academias.store');
+
+    //Rutas Profile
+    Route::get('admin/profile', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::put('admin/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
 });
