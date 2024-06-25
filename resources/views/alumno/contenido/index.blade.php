@@ -69,7 +69,7 @@
             <!-- Fecha de publicación -->
             <h4>Fechas de Publicación</h4>
             @foreach ($fechasPublicacion as $fecha)
-                <a href="{{ route('admin.contenido.fecha', $fecha) }}"
+                <a href="{{ route('alumno.contenido.fecha', $fecha) }}"
                     class="list-group-item list-group-item-action">
                     {{ $fecha }}
                 </a>
