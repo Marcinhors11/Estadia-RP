@@ -13,6 +13,8 @@
 
         <!-- Sección de Contenido -->
         <div class="mt-5 mb-5">
+            <h2>Índice de Contenido</h2>
+            <hr class="my-4">
             @include('docentes.contenido.index', [
                 'autores' => $autores,
                 'academias' => $academias,
