@@ -42,7 +42,7 @@
                                 <form action="{{ route('admin.system.validate-docente', $docente->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn btn-success">Validar</button>
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-user-check"></i></button>
                                 </form>
                             @endif
                         </td>

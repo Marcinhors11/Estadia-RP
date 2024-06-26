@@ -17,15 +17,15 @@
         <!--Mostrar Enlaces/Descargar-->
         @if ($material->tipoContenido->nombre_contenido === 'Enlace')
             <div class="form-group mt-2">
-                <label for="enlace">Enlace</label>
-                <p><a href="{{ $material->enlace }}" target="_blank"><i class="fas fa-link"></i></a></p>
+                <label for="enlace"><i class="fas fa-link"></i> Enlace</label>
+                <p><a href="{{ $material->enlace }}" target="_blank">{{ $material->enlace }}</a></p>
             </div>
         @elseif (
             $material->tipoContenido->nombre_contenido === 'PDF' ||
                 $material->tipoContenido->nombre_contenido === 'Presentación')
             <div class="form-group mt-2">
-                <label for="archivo">Archivo</label>
-                <p><a href="{{ Storage::url($material->archivo) }}" target="_blank"><i class="fas fa-file-lines"></i></a></p>
+                <label for="archivo"><i class="fas fa-file-lines"></i> Archivo</label>
+                <p><a href="{{ Storage::url($material->archivo) }}" target="_blank">{{ Storage::url($material->archivo) }}</a></p>
             </div>
         @endif
 

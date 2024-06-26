@@ -40,13 +40,13 @@
                         </td>
                         <td>{{ $material->estatus_material ? 'Activo' : 'Inactivo' }}</td>
                         <td>
-                            <a href="{{ route('admin.materials.show', $material->id) }}" class="btn btn-info">Ver</a>
-                            <a href="{{ route('admin.materials.edit', $material->id) }}" class="btn btn-warning">Editar</a>
+                            <a href="{{ route('admin.materials.show', $material->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                            <a href="{{ route('admin.materials.edit', $material->id) }}" class="btn btn-warning"><i class="fas fa-pen-to-square"></i></a>
                             <form action="{{ route('admin.materials.destroy', $material->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-can"></i></button>
                             </form>
                         </td>
                     </tr>

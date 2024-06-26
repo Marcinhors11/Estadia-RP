@@ -34,8 +34,8 @@
                         <td>{{ $material->docente->nombre_docente }} {{ $material->docente->apellido_paterno }} {{ $material->docente->apellido_materno }}</td>
                         <td>{{ $material->estatus_material ? 'Activo' : 'Inactivo' }}</td>
                         <td>
-                            <a href="{{ route('docentes.materials.show', $material->id) }}" class="btn btn-info">Ver</a>
-                            <a href="{{ route('docentes.materials.edit', $material->id) }}" class="btn btn-warning">Editar</a>
+                            <a href="{{ route('docentes.materials.show', $material->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                            <a href="{{ route('docentes.materials.edit', $material->id) }}" class="btn btn-warning"><i class="fas fa-pen-to-square"></i></a>
                             @if ($material->solicitudesBaja()->where('pendiente', true)->exists())
                                 <span class="badge bg-warning text-dark">Baja pendiente</span>
                             @else
