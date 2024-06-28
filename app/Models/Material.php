@@ -70,4 +70,9 @@ class Material extends Model
     {
         return $this->hasMany(SolicitudBaja::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'material_tag');
+    }
 }

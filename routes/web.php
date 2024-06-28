@@ -22,6 +22,7 @@ use App\Http\Controllers\DocenteContenidoController;
 use App\Http\Controllers\DocenteProfileController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AlumnoBusquedaController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -162,4 +163,8 @@ Route::middleware(['auth:administrador'])->group(function () {
     //Rutas Profile
     Route::get('admin/profile', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
     Route::put('admin/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+
+    // Rutas para etiquetas
+    Route::get('admin/tags/create', [TagController::class, 'create'])->name('tags.create');
+    Route::post('admin/tags', [TagController::class, 'store'])->name('tags.store');
 });

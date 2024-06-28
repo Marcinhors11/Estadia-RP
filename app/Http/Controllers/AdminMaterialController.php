@@ -10,6 +10,7 @@ use App\Models\Autor;
 use App\Models\Idioma;
 use App\Models\TipoContenido;
 use App\Models\SolicitudBaja;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -41,8 +42,9 @@ class AdminMaterialController extends Controller
         $asignaturas = Asignatura::all();
         $idiomas = Idioma::all();
         $academias = Academia::all();
+        $tags = Tag::all();
         // Pasar ambas variables a la vista
-        return view('admin.materials.create', compact('autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias'));
+        return view('admin.materials.create', compact('autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias', 'tags'));
     }
 
 
@@ -106,6 +108,9 @@ class AdminMaterialController extends Controller
             $material->admin_id = Auth::guard('administrador')->id();
         }
 
+        $material = Material::create($request->all());
+        $material->tags()->attach($request->tags);
+
         // Guardar el material en la base de datos
         $material->save();
 
@@ -144,8 +149,8 @@ class AdminMaterialController extends Controller
         $asignaturas = Asignatura::all();
         $idiomas = Idioma::all();
         $academias = Academia::all();
-
-        return view('admin.materials.edit', compact('material', 'autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias'));
+        $tags = Tag::all();
+        return view('admin.materials.edit', compact('material', 'autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias', 'tags'));
     }
 
 
@@ -200,6 +205,9 @@ class AdminMaterialController extends Controller
         if ($request->hasFile('imagen')) {
             $material->imagen = $request->file('imagen')->store('materiales', 'public');
         }
+
+        $material->update($request->all());
+        $material->tags()->sync($request->tags);
 
         // Guardar los cambios en la base de datos
         $material->save();

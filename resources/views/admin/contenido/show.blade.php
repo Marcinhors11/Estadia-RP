@@ -13,6 +13,12 @@
         <p><strong>Tipo de contenido:</strong> {{ $materiales->tipoContenido->nombre_contenido }}</p>
         <p><strong>Asignatura:</strong> {{ $materiales->asignatura->nombre_asignatura }}</p>
         <p><strong>Fecha de publicación:</strong> {{ $materiales->fecha_publicacion }}</p>
+        <p><strong>Etiquetas:</strong></p>
+        <ul>
+            @foreach ($materiales->tags as $tag)
+                <li class="d-inline p-1 mb-2 bg-primary text-white rounded-2">{{ $tag->nombre_tag }}</li>
+            @endforeach
+        </ul>
 
         <!--Mostrar Enlaces/Descargar-->
         @if ($materiales->tipoContenido->nombre_contenido === 'Enlace')
