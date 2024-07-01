@@ -14,6 +14,12 @@
         <p><strong>Tipo de contenido:</strong> {{ $material->tipoContenido->nombre_contenido }}</p>
         <p><strong>Asignatura:</strong> {{ $material->asignatura->nombre_asignatura }}</p>
         <p><strong>Fecha de publicación:</strong> {{ $material->fecha_publicacion }}</p>
+        <p><strong>Etiquetas:</strong></p>
+        <ul>
+            @foreach ($material->tags as $tag)
+                <li class="d-inline p-1 mb-2 bg-primary text-white rounded-2">{{ $tag->nombre_tag }}</li>
+            @endforeach
+        </ul>
 
         <!--Mostrar Enlaces/Descargar-->
         @if ($material->tipoContenido->nombre_contenido === 'Enlace')
@@ -26,7 +32,8 @@
                 $material->tipoContenido->nombre_contenido === 'Presentación')
             <div class="form-group mt-2">
                 <label for="archivo"><i class="fas fa-file-lines"></i> Archivo</label>
-                <p><a href="{{ Storage::url($material->archivo) }}" target="_blank">{{ Storage::url($material->archivo) }}</a></p>
+                <p><a href="{{ Storage::url($material->archivo) }}"
+                        target="_blank">{{ Storage::url($material->archivo) }}</a></p>
             </div>
         @endif
 
@@ -47,8 +54,8 @@
             @endphp
 
             @if ($youtubeID)
-                <iframe width="960" height="560" src="https://www.youtube.com/embed/{{ $youtubeID }}"
-                    frameborder="0" allowfullscreen></iframe>
+                <iframe width="680" height="340" class="mb-5"
+                    src="https://www.youtube.com/embed/{{ $youtubeID }}" frameborder="0" allowfullscreen></iframe>
             @else
                 <p><a href="{{ $material->archivo }}" target="_blank">{{ $material->archivo }}</a></p>
             @endif

@@ -54,7 +54,7 @@
             @endphp
 
             @if ($youtubeID)
-                <iframe width="960" height="560" src="https://www.youtube.com/embed/{{ $youtubeID }}"
+                <iframe width="680" height="340" class="mb-5" src="https://www.youtube.com/embed/{{ $youtubeID }}"
                     frameborder="0" allowfullscreen></iframe>
             @else
                 <p><a href="{{ $material->archivo }}" target="_blank">{{ $material->archivo }}</a></p>

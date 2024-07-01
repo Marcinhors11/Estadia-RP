@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="jumbotron mt-5">
-            <h1 class="display-4 text-center">
+        <div class="mt-3">
+            <h1 class="text-center">
                 Bienvenido al Repositorio de la División de Ingeniería en
                 Tecnologías de la Información</h1>
             <hr class="my-4">

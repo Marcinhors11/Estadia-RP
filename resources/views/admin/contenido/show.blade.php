@@ -3,7 +3,8 @@
 @section('content')
     <div class="container">
         <div class="position-relative">
-            <a href="{{ route('admin.system.home') }}" class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
+            <a href="{{ route('admin.system.home') }}"
+                class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
         </div>
         <h1>Detalle del Recurso</h1>
         <h3>{{ $materiales->titulo }}</h3>
@@ -31,7 +32,8 @@
                 $materiales->tipoContenido->nombre_contenido === 'Presentación')
             <div class="form-group mt-2">
                 <label for="archivo"><i class="fas fa-file-lines"></i> Archivo</label>
-                <p><a href="{{ Storage::url($materiales->archivo) }}" target="_blank">{{ Storage::url($materiales->archivo) }}</a></p>
+                <p><a href="{{ Storage::url($materiales->archivo) }}"
+                        target="_blank">{{ Storage::url($materiales->archivo) }}</a></p>
             </div>
         @endif
 
@@ -52,8 +54,8 @@
             @endphp
 
             @if ($youtubeID)
-                <iframe width="960" height="560" src="https://www.youtube.com/embed/{{ $youtubeID }}"
-                    frameborder="0" allowfullscreen></iframe>
+                <iframe width="680" height="340" class="mb-5"
+                    src="https://www.youtube.com/embed/{{ $youtubeID }}" frameborder="0" allowfullscreen></iframe>
             @else
                 <p><a href="{{ $materiales->archivo }}" target="_blank">{{ $materiales->archivo }}</a></p>
             @endif

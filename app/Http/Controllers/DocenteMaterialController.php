@@ -10,6 +10,7 @@ use App\Models\Autor;
 use App\Models\Idioma;
 use App\Models\TipoContenido;
 use App\Models\SolicitudBaja;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 
 class DocenteMaterialController extends Controller
@@ -42,8 +43,9 @@ class DocenteMaterialController extends Controller
         $asignaturas = Asignatura::all();
         $idiomas = Idioma::all();
         $academias = Academia::all();
+        $tags = Tag::all();
         // Pasar ambas variables a la vista
-        return view('docentes.materials.create', compact('autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias'));
+        return view('docentes.materials.create', compact('autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias', 'tags'));
     }
 
 
@@ -57,11 +59,11 @@ class DocenteMaterialController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-            'titulo' => 'required|string|max:255',
+            'titulo' => 'required|string|max:255|regex:/^[\p{L}\s]+$/u',
             'autor_id' => 'required|exists:autores,id',
             'tipo_contenido_id' => 'required|exists:tipo_contenido,id',
             'asignatura_id' => 'required|exists:asignaturas,id',
-            'tema' => 'required|string|max:255',
+            'tema' => 'required|string|max:255|regex:/^[\p{L}\s]+$/u',
             'academia_id' => 'required|exists:academias,id',
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip',
             'enlace' => 'nullable|url',
@@ -100,6 +102,8 @@ class DocenteMaterialController extends Controller
             $material->imagen = $request->file('imagen')->store('materiales', 'public');
         }
 
+        $material = Material::create($request->all());
+        $material->tags()->attach($request->tags);
 
         // Asignar el ID del usuario autenticado (docente o administrador)
         $material->docente_id = Auth::id(); // O el campo adecuado para el ID del creador
@@ -137,8 +141,9 @@ class DocenteMaterialController extends Controller
         $asignaturas = Asignatura::all();
         $idiomas = Idioma::all();
         $academias = Academia::all();
+        $tags = Tag::all();
 
-        return view('docentes.materials.edit', compact('material', 'autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias'));
+        return view('docentes.materials.edit', compact('material', 'autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias', 'tags'));
     }
 
     /**
@@ -152,11 +157,11 @@ class DocenteMaterialController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-            'titulo' => 'required|string|max:255',
+            'titulo' => 'required|string|max:255|regex:/^[\p{L}\s]+$/u',
             'autor_id' => 'required|exists:autores,id',
             'tipo_contenido_id' => 'required|exists:tipo_contenido,id',
             'asignatura_id' => 'required|exists:asignaturas,id',
-            'tema' => 'required|string|max:255',
+            'tema' => 'required|string|max:255|regex:/^[\p{L}\s]+$/u',
             'academia_id' => 'required|exists:academias,id',
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip',
             'enlace' => 'nullable|url',
@@ -193,6 +198,8 @@ class DocenteMaterialController extends Controller
             $material->imagen = $request->file('imagen')->store('materiales', 'public');
         }
 
+        $material->update($request->all());
+        $material->tags()->sync($request->tags);
 
         // Guardar los cambios en la base de datos
         $material->save();

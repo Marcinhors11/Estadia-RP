@@ -149,6 +149,23 @@
                     <input type="url" name="enlace" id="enlace" class="form-control"
                         value="{{ old('enlace') }}">
                 </div>
+
+                <!--  Box Etiquetas  -->
+                <div class="form-group col-md-4 m-auto mt-3 p-3">
+                    <label for="tags">Etiquetas:</label>
+                    <select name="tags[]" id="tags" class="form-control" multiple>
+                        @foreach ($tags as $tag)
+                            <option value="{{ $tag->id }}">{{ $tag->nombre_tag }}</option>
+                        @endforeach
+                    </select>
+                    @if (Auth::guard('docente')->check())
+                        <a href="{{ route('docentes.tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
+                            Etiqueta</a>
+                    @elseif (Auth::guard('administrador')->check())
+                        <a href="{{ route('tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
+                            Etiqueta</a>
+                    @endif
+                </div>
             </div>
 
             <!--  Button Submit  -->

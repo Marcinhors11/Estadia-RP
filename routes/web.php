@@ -22,6 +22,7 @@ use App\Http\Controllers\DocenteContenidoController;
 use App\Http\Controllers\DocenteProfileController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AlumnoBusquedaController;
+use App\Http\Controllers\DocenteTagController;
 use App\Http\Controllers\TagController;
 
 /*
@@ -104,6 +105,10 @@ Route::middleware(['auth:docente'])->group(function () {
     //Rutas Profile
     Route::get('docente/profile', [DocenteProfileController::class, 'edit'])->name('docentes.profile.edit');
     Route::put('docente/profile', [DocenteProfileController::class, 'update'])->name('docentes.profile.update');
+
+    // Rutas para etiquetas
+    Route::get('docente/tags/create', [DocenteTagController::class, 'create'])->name('docentes.tags.create');
+    Route::post('docente/tags', [DocenteTagController::class, 'store'])->name('docentes.tags.store');
 });
 
 
