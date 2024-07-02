@@ -2,12 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="position-relative">
-            <a href="{{ route('docentes.materials.index') }}"
-                class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
-        </div>
-        <h1>Detalle del Recurso</h1>
-        <h3>{{ $material->titulo }}</h3>
+        <h2 class="mt-3">{{ $material->titulo }}</h2>
+        <hr class="my-4">
         <p><strong>Descripción:</strong> {{ $material->descripcion }}</p>
         <p><strong>Autor:</strong> {{ $material->autor->nombre_autor }} {{ $material->autor->apellido_paterno }}
             {{ $material->autor->apellido_materno }}</p>

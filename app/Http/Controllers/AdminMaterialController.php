@@ -37,12 +37,12 @@ class AdminMaterialController extends Controller
     public function create()
     {
         // Obtener todos los autores y tipos de contenido para mostrarlos en el formulario de creación de material
-        $autores = Autor::all();
+        $autores = Autor::orderBy('apellido_paterno', 'asc')->get();
+        $idiomas = Idioma::orderBy('nombre_idioma', 'asc')->get();
+        $asignaturas = Asignatura::orderBy('nombre_asignatura', 'asc')->get();
+        $academias = Academia::orderBy('nombre_academia', 'asc')->get();
+        $tags = Tag::orderBy('nombre_tag', 'asc')->get();
         $tipoContenidos = TipoContenido::all();
-        $asignaturas = Asignatura::all();
-        $idiomas = Idioma::all();
-        $academias = Academia::all();
-        $tags = Tag::all();
         // Pasar ambas variables a la vista
         return view('admin.materials.create', compact('autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias', 'tags'));
     }
@@ -58,7 +58,7 @@ class AdminMaterialController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-            'titulo' => 'required|string|max:255',
+            'titulo' => 'required|string|max:500',
             'autor_id' => 'required|exists:autores,id',
             'tipo_contenido_id' => 'required|exists:tipo_contenido,id',
             'asignatura_id' => 'required|exists:asignaturas,id',
@@ -67,7 +67,7 @@ class AdminMaterialController extends Controller
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip',
             'enlace' => 'nullable|url',
             'idioma_id' => 'required|exists:idiomas,id',
-            'fecha_publicacion' => 'required|date',
+            'fecha_publicacion' => 'required|date|before_or_equal:today',
             'descripcion' => 'nullable|string',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -85,8 +85,13 @@ class AdminMaterialController extends Controller
         $material->enlace = $request->enlace;
         $material->descripcion = $request->descripcion;
         $material->estatus_material = true; // Estatus por defecto activo
-        // Handle file upload
+        // Manejo del archivo
         if ($request->hasFile('archivo')) {
+            // Eliminar archivo anterior si existe
+            if ($material->archivo) {
+                Storage::disk('public')->delete($material->archivo);
+            }
+
             $filePath = $request->file('archivo')->store('materiales', 'public');
             $material->archivo = $filePath;
         }
@@ -98,8 +103,14 @@ class AdminMaterialController extends Controller
 
         //Handle Imagen
         if ($request->hasFile('imagen')) {
+            // Eliminar archivo anterior si existe
+            if ($material->imagen) {
+                Storage::disk('public')->delete($material->imagen);
+            }
+
             $material->imagen = $request->file('imagen')->store('materiales', 'public');
         }
+
 
         // Asignar el ID del usuario autenticado (docente o administrador)
         if (Auth::guard('docente')->check()) {
@@ -108,7 +119,6 @@ class AdminMaterialController extends Controller
             $material->admin_id = Auth::guard('administrador')->id();
         }
 
-        $material = Material::create($request->all());
         $material->tags()->attach($request->tags);
 
         // Guardar el material en la base de datos
@@ -144,12 +154,13 @@ class AdminMaterialController extends Controller
     public function edit(Material $material)
     {
         // Obtener todos los autores y tipos de contenidos para mostrarlos en el formulario de edición
-        $autores = Autor::all();
+        $autores = Autor::orderBy('apellido_paterno', 'asc')->get();
+        $idiomas = Idioma::orderBy('nombre_idioma', 'asc')->get();
+        $asignaturas = Asignatura::orderBy('nombre_asignatura', 'asc')->get();
+        $academias = Academia::orderBy('nombre_academia', 'asc')->get();
+        $tags = Tag::orderBy('nombre_tag', 'asc')->get();
         $tipoContenidos = TipoContenido::all();
-        $asignaturas = Asignatura::all();
-        $idiomas = Idioma::all();
-        $academias = Academia::all();
-        $tags = Tag::all();
+
         return view('admin.materials.edit', compact('material', 'autores', 'tipoContenidos', 'asignaturas', 'idiomas', 'academias', 'tags'));
     }
 
@@ -165,16 +176,16 @@ class AdminMaterialController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-            'titulo' => 'required|string|max:255',
+            'titulo' => 'required|string|max:500',
             'autor_id' => 'required|exists:autores,id',
             'tipo_contenido_id' => 'required|exists:tipo_contenido,id',
             'asignatura_id' => 'required|exists:asignaturas,id',
-            'tema' => 'required|string|max:255',
+            'tema' => 'required|string|max:255|regex:/^[\p{L}\s]+$/u',
             'academia_id' => 'required|exists:academias,id',
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,zip',
             'enlace' => 'nullable|url',
             'idioma_id' => 'required|exists:idiomas,id',
-            'fecha_publicacion' => 'required|date',
+            'fecha_publicacion' => 'required|date|before_or_equal:today',
             'descripcion' => 'nullable|string',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -190,8 +201,13 @@ class AdminMaterialController extends Controller
         $material->enlace = $request->enlace;
         $material->fecha_publicacion = $request->fecha_publicacion;
         $material->descripcion = $request->descripcion;
-        // Handle file upload
+        // Manejo del archivo
         if ($request->hasFile('archivo')) {
+            // Eliminar archivo anterior si existe
+            if ($material->archivo) {
+                Storage::disk('public')->delete($material->archivo);
+            }
+
             $filePath = $request->file('archivo')->store('materiales', 'public');
             $material->archivo = $filePath;
         }
@@ -203,10 +219,14 @@ class AdminMaterialController extends Controller
 
         //Handle Imagen
         if ($request->hasFile('imagen')) {
+            // Eliminar archivo anterior si existe
+            if ($material->imagen) {
+                Storage::disk('public')->delete($material->imagen);
+            }
+
             $material->imagen = $request->file('imagen')->store('materiales', 'public');
         }
 
-        $material->update($request->all());
         $material->tags()->sync($request->tags);
 
         // Guardar los cambios en la base de datos

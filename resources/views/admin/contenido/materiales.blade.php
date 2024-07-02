@@ -24,7 +24,7 @@
                             Sin imagen
                         @endif
                     </td>
-                    <td>{{ $material->titulo }}</td>
+                    <td class="w-50 p-3" style="text-align: justify;">{{ $material->titulo }}</td>
                     <td>{{ $material->autor->nombre_autor }} {{ $material->autor->apellido_paterno }} {{ $material->autor->apellido_materno }}</td>
                     <td>{{ $material->tipoContenido->nombre_contenido }}</td>
                     <td>

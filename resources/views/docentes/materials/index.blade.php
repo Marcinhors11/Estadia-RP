@@ -18,7 +18,7 @@
                 </ul>
             </div>
         @endif
-        <table class="table">
+        <table class="table mt-3">
             <thead>
                 <tr>
                     <th>Título</th>
@@ -30,12 +30,18 @@
             <tbody>
                 @foreach ($materials as $material)
                     <tr>
-                        <td>{{ $material->titulo }}</td>
-                        <td>{{ $material->docente->nombre_docente }} {{ $material->docente->apellido_paterno }} {{ $material->docente->apellido_materno }}</td>
-                        <td>{{ $material->estatus_material ? 'Activo' : 'Inactivo' }}</td>
+                        <td class="w-50 p-3" style="text-align: justify;">{{ $material->titulo }}</td>
+                        <td>{{ $material->docente->nombre_docente }} {{ $material->docente->apellido_paterno }}
+                            {{ $material->docente->apellido_materno }}</td>
+                        <td class="{{ $material->estatus_material ? 'text-success' : 'text-danger' }}"
+                            style="text-align: center;">
+                            {{ $material->estatus_material ? 'Activo' : 'Inactivo' }}
+                        </td>
                         <td>
-                            <a href="{{ route('docentes.materials.show', $material->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                            <a href="{{ route('docentes.materials.edit', $material->id) }}" class="btn btn-warning"><i class="fas fa-pen-to-square"></i></a>
+                            <a href="{{ route('docentes.materials.show', $material->id) }}" class="btn btn-info"><i
+                                    class="fas fa-eye"></i></a>
+                            <a href="{{ route('docentes.materials.edit', $material->id) }}" class="btn btn-warning"><i
+                                    class="fas fa-pen-to-square"></i></a>
                             @if ($material->solicitudesBaja()->where('pendiente', true)->exists())
                                 <span class="badge bg-warning text-dark">Baja pendiente</span>
                             @else

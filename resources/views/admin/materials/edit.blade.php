@@ -39,16 +39,11 @@
                     <select class="form-control" id="autor" name="autor_id" required>
                         @foreach ($autores as $autor)
                             <option value="{{ $autor->id }}" {{ $autor->id == $material->autor_id ? 'selected' : '' }}>
-                                {{ $autor->nombre_autor }} {{ $autor->apellido_paterno }} {{ $autor->apellido_materno }}
+                                {{ $autor->apellido_paterno }} {{ $autor->apellido_materno }} {{ $autor->nombre_autor }}
                             </option>
                         @endforeach
                     </select>
-                    @if (Auth::guard('docente')->check())
-                        <a href="{{ route('docentes.autores.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo
-                            Autor</a>
-                    @elseif (Auth::guard('administrador')->check())
-                        <a href="{{ route('admin.autores.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo Autor</a>
-                    @endif
+                    <a href="{{ route('admin.autores.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo Autor</a>
                 </div>
 
                 <!--  Box Date  -->
@@ -176,14 +171,15 @@
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="tags">Etiquetas:</label>
                     <select name="tags[]" id="tags" class="form-control" multiple>
-                        @foreach ($tags as $tag)
+                        @foreach($tags as $tag)
                             <option value="{{ $tag->id }}"
-                                {{ $tag->id == $material->tag_id ? 'selected' : '' }}>{{ $tag->nombre_tag }}
+                                @if($material->tags->contains($tag->id)) selected @endif>
+                                {{ $tag->nombre_tag }}
                             </option>
                         @endforeach
                     </select>
                     @if (Auth::guard('docente')->check())
-                        <a href="{{ route('tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
+                        <a href="{{ route('docentes.tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
                             Etiqueta</a>
                     @elseif (Auth::guard('administrador')->check())
                         <a href="{{ route('tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
@@ -225,11 +221,10 @@
 
             // Run on initial load
             toggleFields();
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
+
+            $(document).ready(function() {
             $('#tags').select2();
+        });
         });
     </script>
 @endsection

@@ -37,8 +37,9 @@
                     <select class="form-control" id="autor" name="autor_id" required>
                         <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($autores as $autor)
-                            <option value="{{ $autor->id }}">{{ $autor->nombre_autor }} {{ $autor->apellido_paterno }}
-                                {{ $autor->apellido_materno }}</option>
+                            <option value="{{ $autor->id }}" {{ old('autor_id') == $autor->id ? 'selected' : '' }}>
+                                {{ $autor->apellido_paterno }}
+                                {{ $autor->apellido_materno }} {{ $autor->nombre_autor }}</option>
                         @endforeach
                     </select>
                     <a href="{{ route('docentes.autores.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo
@@ -60,7 +61,8 @@
                     <select name="idioma_id" id="idioma" class="form-control" required>
                         <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($idiomas as $idioma)
-                            <option value="{{ $idioma->id }}">{{ $idioma->nombre_idioma }}</option>
+                            <option value="{{ $idioma->id }}" {{ old('idioma_id') == $idioma->id ? 'selected' : '' }}>
+                                {{ $idioma->nombre_idioma }}</option>
                         @endforeach
                     </select>
                     @if (Auth::guard('administrador')->check())
@@ -74,13 +76,11 @@
                     <select name="tipo_contenido_id" id="tipo_contenido" class="form-control" required>
                         <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($tipoContenidos as $tipoContenido)
-                            <option value="{{ $tipoContenido->id }}">{{ $tipoContenido->nombre_contenido }}</option>
+                            <option value="{{ $tipoContenido->id }}"
+                                {{ old('tipo_contenido_id') == $tipoContenido->id ? 'selected' : '' }}>
+                                {{ $tipoContenido->nombre_contenido }}</option>
                         @endforeach
                     </select>
-                    @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('tipo_contenidos.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo Tipo de
-                            Contenido</a>
-                    @endif
                 </div>
 
                 <!--  Box Description  -->
@@ -93,7 +93,7 @@
             <div class="row">
                 <!--  Box Imagen  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="imagen">Imagen Previsualización</label>
+                    <label for="imagen">Imagen/Portada Previsualización</label>
                     <input type="file" id="imagen" name="imagen" class="form-control">
                 </div>
 
@@ -110,13 +110,11 @@
                     <select name="asignatura_id" id="asignatura" class="form-control" required>
                         <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($asignaturas as $asignatura)
-                            <option value="{{ $asignatura->id }}">{{ $asignatura->nombre_asignatura }}</option>
+                            <option value="{{ $asignatura->id }}"
+                                {{ old('asignatura_id') == $asignatura->id ? 'selected' : '' }}>
+                                {{ $asignatura->nombre_asignatura }}</option>
                         @endforeach
                     </select>
-                    @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('asignaturas.create') }}" class="btn btn-secondary btn-sm mt-2">Nueva
-                            Asignatura</a>
-                    @endif
                 </div>
             </div>
 
@@ -127,13 +125,11 @@
                     <select name="academia_id" id="academia" class="form-control" required>
                         <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($academias as $academia)
-                            <option value="{{ $academia->id }}">{{ $academia->nombre_academia }}</option>
+                            <option value="{{ $academia->id }}"
+                                {{ old('academia_id') == $academia->id ? 'selected' : '' }}>
+                                {{ $academia->nombre_academia }}</option>
                         @endforeach
                     </select>
-                    @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('academias.create') }}" class="btn btn-secondary btn-sm mt-2">Nueva
-                            Academia</a>
-                    @endif
                 </div>
 
                 <!--  Box Archivo  -->
@@ -201,6 +197,11 @@
 
             // Run on initial load
             toggleFields();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#tags').select2();
         });
     </script>
 @endsection
