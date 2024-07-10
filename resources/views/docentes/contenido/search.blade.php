@@ -4,11 +4,7 @@
     <div class="container">
         <h1>Resultados de la búsqueda</h1>
 
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
+        @include('errors.alerts')
 
         <p class="text-primary">Resultados para "{{ $query }}"</p>
 

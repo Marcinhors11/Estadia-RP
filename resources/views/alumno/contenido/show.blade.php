@@ -6,6 +6,7 @@
             <a href="{{ route('alumno.system.home') }}"
                 class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
         </div>
+        @include('errors.alerts')
         <h1>Detalle del Recurso</h1>
         <hr class="my-3">
         <h4 class="mb-3">{{ $materiales->titulo }}</h4>

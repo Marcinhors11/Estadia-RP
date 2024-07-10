@@ -116,10 +116,9 @@
                             </li>
                         </ul>
                     </li>
-
                 </ul>
+                @include('busqueda.bar')
             </div>
-            @include('busqueda.bar')
         @endif
 
         <!--Usuario-->

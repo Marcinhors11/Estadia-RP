@@ -18,24 +18,20 @@ class DocenteProfileController extends Controller
     {
         $docente = Auth::guard('docente')->user();
 
-        $rules = [
+        $request->validate([
             'nombre_docente' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
             'apellido_paterno' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
             'apellido_materno' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
-        ];
-
-        if ($request->filled('password')) {
-            $rules['password'] = 'nullable|string|min:8|confirmed';
-        }
-
-        $request->validate($rules);
+            'current_password' => 'nullable|required_with:password|current_password',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
 
         $docente->nombre_docente = $request->input('nombre_docente');
         $docente->apellido_paterno = $request->input('apellido_paterno');
         $docente->apellido_materno = $request->input('apellido_materno');
 
         if ($request->filled('password')) {
-            $docente->password = Hash::make($request->input('password'));
+            $docente->password = Hash::make($request->password);
         }
 
         $docente->save();

@@ -3,19 +3,7 @@
 @section('content')
     <div class="container mt-5">
         <h2>Validar Docentes</h2>
-        @if (session('success'))
-            <div class="alert alert-success col-md-6 m-auto mt-3">{{ session('success') }}</div>
-        @endif
-        @if ($errors->any())
-            <!-- Muestra mensaje de error si los datos no son correctos -->
-            <div class="alert alert-danger col-md-6 m-auto mt-3">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        @include('errors.alerts')
         <table class="table">
             <thead>
                 <tr>

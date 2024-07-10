@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('errors.alerts')
         <div class="position-relative">
             <a href="{{ route('admin.system.home') }}"
                 class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>

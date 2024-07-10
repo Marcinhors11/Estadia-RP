@@ -4,20 +4,7 @@
     <div class="container mt-3 .d-inline-flex ">
         <h1 class="text-center">Registrar Nuevo Material</h1>
 
-        @if (session('success'))
-            <div class="alert alert-success col-md-6 m-auto mt-3">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if ($errors->any())
-            <div class="alert alert-danger col-md-6 m-auto mt-3">
-                <ul style="list-style: none">
-                    @foreach ($errors->all() as $error)
-                        <li>{!! $error !!}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        @include('errors.alerts')
 
         <form action="{{ route('admin.materials.store') }}" method="POST" enctype="multipart/form-data"
             class="justify-content-center">
@@ -42,7 +29,10 @@
                                 {{ $autor->apellido_materno }} {{ $autor->nombre_autor }}</option>
                         @endforeach
                     </select>
-                    <a href="{{ route('admin.autores.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo Autor</a>
+                    <button type="button" class="btn btn-secondary btn-sm mt-2" data-toggle="modal"
+                        data-target="#nuevoAutorModal">
+                        Nuevo Autor
+                    </button>
                 </div>
 
                 <!--  Box Date  -->
@@ -182,9 +172,11 @@
             </div>
         </form>
     </div>
+    @include('admin.autores.create') <!-- Incluir el modal aquí -->
 @endsection
 
 @section('scripts')
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var tipoContenido = document.getElementById('tipo_contenido');
@@ -193,7 +185,8 @@
 
             function toggleFields() {
                 var selectedOption = tipoContenido.options[tipoContenido.selectedIndex].text;
-                if (selectedOption === 'PDF' || selectedOption === 'Presentación' || selectedOption === 'Documento') {
+                if (selectedOption === 'PDF' || selectedOption === 'Presentación' || selectedOption ===
+                    'Documento') {
                     archivoGroup.style.display = 'block';
                     enlaceGroup.style.display = 'none';
                 } else if (selectedOption === 'Enlace') {
@@ -213,6 +206,9 @@
     </script>
     <script>
         $(document).ready(function() {
+            $('#nuevoModal').on('hidden.bs.modal', function() {
+                $(this).find('form').trigger('reset');
+            });
             $('#tags').select2();
         });
     </script>

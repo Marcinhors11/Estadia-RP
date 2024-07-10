@@ -3,21 +3,7 @@
 @section('content')
     <div class="container">
         <!-- Mostrar los mensajes de error -->
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        @include('errors.alerts')
         <h1>Materiales Publicados en {{ request()->route('fecha') }}</h1>
         <table class="table">
             <thead>

@@ -18,24 +18,24 @@ class AdminProfileController extends Controller
     {
         $admin = Auth::guard('administrador')->user();
 
-        $rules = [
+        $request->validate([
             'nombre_admin' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
             'apellido_paterno' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
             'apellido_materno' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
-        ];
-
-        if ($request->filled('password')) {
-            $rules['password'] = 'nullable|string|min:8|confirmed';
-        }
-
-        $request->validate($rules);
+            'current_password' => 'nullable|required_with:password|current_password',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
 
         $admin->nombre_admin = $request->input('nombre_admin');
         $admin->apellido_paterno = $request->input('apellido_paterno');
         $admin->apellido_materno = $request->input('apellido_materno');
 
+        if (Auth::guard('administrador')->check()) {
+            $admin->correo = $request->correo;
+        }
+
         if ($request->filled('password')) {
-            $admin->password = Hash::make($request->input('password'));
+            $admin->password = Hash::make($request->password);
         }
 
         $admin->save();

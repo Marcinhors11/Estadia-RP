@@ -14,6 +14,7 @@ use App\Http\Controllers\IdiomaController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\TipoContenidoController;
 use App\Http\Controllers\AdminAutorController;
+use App\Http\Controllers\AdminBusquedaController;
 use App\Http\Controllers\AdminContenidoController;
 use App\Http\Controllers\DocenteAutorController;
 use App\Http\Controllers\AlumnoContenidoController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\DocenteContenidoController;
 use App\Http\Controllers\DocenteProfileController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AlumnoBusquedaController;
+use App\Http\Controllers\DocenteBusquedaController;
 use App\Http\Controllers\DocenteTagController;
 use App\Http\Controllers\TagController;
 
@@ -111,8 +113,8 @@ Route::middleware(['auth:docente'])->group(function () {
     Route::post('docente/tags', [DocenteTagController::class, 'store'])->name('docentes.tags.store');
 
     //Rutas Busqueda
-    Route::get('docente/busqueda', [AlumnoBusquedaController::class, 'index'])->name('docentes.contenido.search');
-    Route::get('docente/busqueda/search', [AlumnoBusquedaController::class, 'search'])->name('docentes.contenido.search');
+    Route::get('docente/busqueda', [DocenteBusquedaController::class, 'index'])->name('docentes.contenido.search');
+    Route::get('docente/busqueda/search', [DocenteBusquedaController::class, 'search'])->name('docentes.contenido.search');
 });
 
 
@@ -178,6 +180,6 @@ Route::middleware(['auth:administrador'])->group(function () {
     Route::post('admin/tags', [TagController::class, 'store'])->name('tags.store');
 
     //Rutas Busqueda
-    Route::get('admin/busqueda', [AlumnoBusquedaController::class, 'index'])->name('admin.contenido.search');
-    Route::get('admin/busqueda/search', [AlumnoBusquedaController::class, 'search'])->name('admin.contenido.search');
+    Route::get('admin/busqueda', [AdminBusquedaController::class, 'index'])->name('admin.contenido.search');
+    Route::get('admin/busqueda/search', [AdminBusquedaController::class, 'search'])->name('admin.contenido.search');
 });

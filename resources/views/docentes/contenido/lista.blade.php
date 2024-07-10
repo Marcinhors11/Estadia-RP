@@ -6,6 +6,7 @@
             <a href="{{ route('docentes.system.home') }}"
                 class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
         </div>
+        @include('errors.alerts')
         <h2>Materiales de
             {{ $autor->nombre_autor ?? ($academia->nombre_academia ?? ($asignatura->nombre_asignatura ?? ($tipoContenido->nombre_contenido ?? ($docente->nombre_docente ?? $fechas)))) }}
         </h2>

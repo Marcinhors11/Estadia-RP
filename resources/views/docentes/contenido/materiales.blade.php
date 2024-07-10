@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    @include('errors.alerts')
     <h1>Materiales Publicados en {{ request()->route('fecha') }}</h1>
     <table class="table">
         <thead>

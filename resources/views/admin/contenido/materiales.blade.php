@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Materiales Publicados en {{ request()->route('fecha') }}</h1>
+        @include('errors.alerts')
         <table class="table">
             <thead>
                 <tr>

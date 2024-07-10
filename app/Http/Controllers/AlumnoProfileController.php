@@ -21,32 +21,24 @@ class AlumnoProfileController extends Controller
         $alumno = Auth::guard('alumno')->user();
 
         // Actualizar solo si hay cambios
-        $rules = [
+        $request->validate([
             'nombre_alumno' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
             'apellido_paterno' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
             'apellido_materno' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
-        ];
-
-        if ($request->input('correo') !== $alumno->correo) {
-            $rules['correo'] = 'required|string|email|max:255|unique:alumnos';
-        }
-
-        if ($request->filled('password')) {
-            $rules['password'] = 'nullable|string|min:8|confirmed';
-        }
-
-        $request->validate($rules);
+            'current_password' => 'nullable|required_with:password|current_password',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
 
         $alumno->nombre_alumno = $request->input('nombre_alumno');
         $alumno->apellido_paterno = $request->input('apellido_paterno');
         $alumno->apellido_materno = $request->input('apellido_materno');
 
-        if ($request->input('correo') !== $alumno->correo) {
-            $alumno->correo = $request->input('correo');
+        if (Auth::guard('alumno')->check()) {
+            $alumno->correo = $request->correo;
         }
 
         if ($request->filled('password')) {
-            $alumno->password = Hash::make($request->input('password'));
+            $alumno->password = Hash::make($request->password);
         }
 
         $alumno->save();

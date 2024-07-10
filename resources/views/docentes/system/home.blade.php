@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('errors.alerts')
         <div class="mt-3">
             <h1 class="text-center">
                 Bienvenido al Repositorio de la División de Ingeniería en
