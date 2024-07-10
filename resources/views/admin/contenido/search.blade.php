@@ -60,7 +60,7 @@
                                 </ul>
 
                                 <div class="d-grid gap-2 col-5 mt-4 mx-auto">
-                                    <a href="{{ route('alumno.contenido.show', $material->id) }}" class="btn btn-outline-secondary">Ver
+                                    <a href="{{ route('admin.contenido.show', $material->id) }}" class="btn btn-outline-secondary">Ver
                                     Material</a>
                                 </div>
 

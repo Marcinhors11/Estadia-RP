@@ -63,8 +63,8 @@ Route::middleware(['auth:alumno'])->group(function () {
     Route::put('alumno/profile', [AlumnoProfileController::class, 'update'])->name('alumno.profile.update');
 
     //Rutas Busqueda
-    Route::get('alumno/materials', [AlumnoBusquedaController::class, 'index'])->name('alumno.contenido.search');
-    Route::get('alumno/materials/search', [AlumnoBusquedaController::class, 'search'])->name('alumno.contenido.search');
+    Route::get('alumno/busqueda', [AlumnoBusquedaController::class, 'index'])->name('alumno.contenido.search');
+    Route::get('alumno/busqueda/search', [AlumnoBusquedaController::class, 'search'])->name('alumno.contenido.search');
 });
 
 // ####################### Rutas Docente #######################
@@ -109,6 +109,10 @@ Route::middleware(['auth:docente'])->group(function () {
     // Rutas para etiquetas
     Route::get('docente/tags/create', [DocenteTagController::class, 'create'])->name('docentes.tags.create');
     Route::post('docente/tags', [DocenteTagController::class, 'store'])->name('docentes.tags.store');
+
+    //Rutas Busqueda
+    Route::get('docente/busqueda', [AlumnoBusquedaController::class, 'index'])->name('docentes.contenido.search');
+    Route::get('docente/busqueda/search', [AlumnoBusquedaController::class, 'search'])->name('docentes.contenido.search');
 });
 
 
@@ -172,4 +176,8 @@ Route::middleware(['auth:administrador'])->group(function () {
     // Rutas para etiquetas
     Route::get('admin/tags/create', [TagController::class, 'create'])->name('tags.create');
     Route::post('admin/tags', [TagController::class, 'store'])->name('tags.store');
+
+    //Rutas Busqueda
+    Route::get('admin/busqueda', [AlumnoBusquedaController::class, 'index'])->name('admin.contenido.search');
+    Route::get('admin/busqueda/search', [AlumnoBusquedaController::class, 'search'])->name('admin.contenido.search');
 });

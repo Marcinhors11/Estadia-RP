@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Material;
 
-class AlumnoBusquedaController extends Controller
+class AdminBusquedaController extends Controller
 {
     public function search(Request $request)
     {
@@ -55,6 +55,6 @@ class AlumnoBusquedaController extends Controller
             return redirect()->back()->with('error', 'No se encontraron resultados.');
         }
 
-        return view('alumno.contenido.search', compact('results', 'query', 'filter'));
+        return view('admin.contenido.search', compact('results', 'query', 'filter'));
     }
 }

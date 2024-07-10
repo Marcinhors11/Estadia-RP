@@ -7,6 +7,8 @@
                 class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
         </div>
         <h1>Detalle del Recurso</h1>
+        <hr class="my-3">
+        <h4 class="mb-3">{{ $material->titulo }}</h4>
         <h3>{{ $material->titulo }}</h3>
         <p><strong>Descripción:</strong> {{ $material->descripcion }}</p>
         <p><strong>Autor:</strong> {{ $material->autor->nombre_autor }} {{ $material->autor->apellido_paterno }}
@@ -29,7 +31,8 @@
             </div>
         @elseif (
             $material->tipoContenido->nombre_contenido === 'PDF' ||
-                $material->tipoContenido->nombre_contenido === 'Presentación')
+                $material->tipoContenido->nombre_contenido === 'Presentación' ||
+                $material->tipoContenido->nombre_contenido === 'Documento')
             <div class="form-group mt-2">
                 <label for="archivo"><i class="fas fa-file-lines"></i> Archivo</label>
                 <p><a href="{{ Storage::url($material->archivo) }}"
@@ -41,7 +44,8 @@
         @if ($material->tipoContenido->nombre_contenido == 'PDF')
             <!--Mostrar Contenido PDF, PRESENTACIÓN-->
             <iframe src="{{ asset('storage/' . $material->archivo) }}" width="100%" height="600px"></iframe>
-        @elseif($material->tipoContenido->nombre_contenido == 'Presentación')
+        @elseif($material->tipoContenido->nombre_contenido == 'Presentación' ||
+                $material->tipoContenido->nombre_contenido === 'Documento')
             <iframe src="https://docs.google.com/gview?url={{ asset('storage/' . $material->archivo) }}&embedded=true"
                 width="100%" height="600px" class="embed-responsive-item"></iframe>
         @elseif($material->tipoContenido->nombre_contenido == 'Enlace')

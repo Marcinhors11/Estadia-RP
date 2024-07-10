@@ -35,7 +35,7 @@
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="autor">Autor</label>
                     <select class="form-control" id="autor" name="autor_id" required>
-                        <option value="nuevo" class="text-secondary">Seleccionar</option>
+                        <option selected value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($autores as $autor)
                             <option value="{{ $autor->id }}" {{ old('autor_id') == $autor->id ? 'selected' : '' }}>
                                 {{ $autor->apellido_paterno }}
@@ -59,7 +59,7 @@
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="idioma">Idioma</label>
                     <select name="idioma_id" id="idioma" class="form-control" required>
-                        <option value="nuevo" class="text-secondary">Seleccionar</option>
+                        <option selected value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($idiomas as $idioma)
                             <option value="{{ $idioma->id }}" {{ old('idioma_id') == $idioma->id ? 'selected' : '' }}>
                                 {{ $idioma->nombre_idioma }}</option>
@@ -74,7 +74,7 @@
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="tipo_contenido">Tipo de Contenido</label>
                     <select name="tipo_contenido_id" id="tipo_contenido" class="form-control" required>
-                        <option value="nuevo" class="text-secondary">Seleccionar</option>
+                        <option selected value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($tipoContenidos as $tipoContenido)
                             <option value="{{ $tipoContenido->id }}"
                                 {{ old('tipo_contenido_id') == $tipoContenido->id ? 'selected' : '' }}>
@@ -108,7 +108,7 @@
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="asignatura">Asignatura</label>
                     <select name="asignatura_id" id="asignatura" class="form-control" required>
-                        <option value="nuevo" class="text-secondary">Seleccionar</option>
+                        <option selected value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($asignaturas as $asignatura)
                             <option value="{{ $asignatura->id }}"
                                 {{ old('asignatura_id') == $asignatura->id ? 'selected' : '' }}>
@@ -123,7 +123,7 @@
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="academia">Academia</label>
                     <select name="academia_id" id="academia" class="form-control" required>
-                        <option value="nuevo" class="text-secondary">Seleccionar</option>
+                        <option selected value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($academias as $academia)
                             <option value="{{ $academia->id }}"
                                 {{ old('academia_id') == $academia->id ? 'selected' : '' }}>
@@ -134,7 +134,7 @@
 
                 <!--  Box Archivo  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3" id="archivo-group" style="display:none;">
-                    <label for="archivo">Archivo (PDF o Presentación)</label>
+                    <label for="archivo">Archivo (pdf,doc,docx,ppt,pptx,zip)</label>
                     <input type="file" name="archivo" id="archivo" class="form-control">
                 </div>
 
@@ -181,7 +181,7 @@
 
             function toggleFields() {
                 var selectedOption = tipoContenido.options[tipoContenido.selectedIndex].text;
-                if (selectedOption === 'PDF' || selectedOption === 'Presentación') {
+                if (selectedOption === 'PDF' || selectedOption === 'Presentación' || selectedOption === 'Documento') {
                     archivoGroup.style.display = 'block';
                     enlaceGroup.style.display = 'none';
                 } else if (selectedOption === 'Enlace') {

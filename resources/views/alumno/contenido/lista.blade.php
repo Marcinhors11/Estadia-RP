@@ -22,13 +22,26 @@
             <a href="{{ route('alumno.system.home') }}"
                 class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
         </div>
-        <h2>Materiales de
-            {{ $autor->nombre_autor ?? ($academia->nombre_academia ?? ($asignatura->nombre_asignatura ?? ($tipoContenido->nombre_contenido ?? ($docente->nombre_docente ?? $fechas)))) }}
+        <h2>
+            Materiales de
+            @if (isset($autor))
+                {{ $autor->nombre_autor }} {{ $autor->apellido_paterno }} {{ $autor->apellido_materno }}
+            @elseif(isset($academia))
+                {{ $academia->nombre_academia }}
+            @elseif(isset($asignatura))
+                {{ $asignatura->nombre_asignatura }}
+            @elseif(isset($tipoContenido))
+                {{ $tipoContenido->nombre_contenido }}
+            @elseif(isset($docente))
+                {{ $docente->nombre_docente }} {{ $docente->apellido_paterno }} {{ $docente->apellido_materno }}
+            @else
+                {{ $fechas }}
+            @endif
         </h2>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Imagen</th>
+                    <th>Portada</th>
                     <th>Título</th>
                     <th>Autor</th>
                     <th>Tipo</th>
@@ -46,7 +59,7 @@
                                 Sin imagen
                             @endif
                         </td>
-                        <td>{{ $material->titulo }}</td>
+                        <td class="w-50 p-3" style="text-align: justify;">{{ $material->titulo }}</td>
                         <td>{{ $material->autor->nombre_autor }} {{ $material->autor->apellido_paterno }}
                             {{ $material->autor->apellido_materno }}</td>
                         <td>{{ $material->tipoContenido->nombre_contenido }}</td>

@@ -145,7 +145,7 @@
 
                 <!--  Box Archivo  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3" id="archivo-group" style="display:none;">
-                    <label for="archivo">Archivo (PDF o Presentación)</label>
+                    <label for="archivo">Archivo (pdf,doc,docx,ppt,pptx,zip)</label>
                     <input type="file" name="archivo" id="archivo" class="form-control">
                 </div>
 
@@ -193,7 +193,7 @@
 
             function toggleFields() {
                 var selectedOption = tipoContenido.options[tipoContenido.selectedIndex].text;
-                if (selectedOption === 'PDF' || selectedOption === 'Presentación') {
+                if (selectedOption === 'PDF' || selectedOption === 'Presentación' || selectedOption === 'Documento') {
                     archivoGroup.style.display = 'block';
                     enlaceGroup.style.display = 'none';
                 } else if (selectedOption === 'Enlace') {

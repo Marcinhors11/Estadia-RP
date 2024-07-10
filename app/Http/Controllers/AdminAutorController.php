@@ -20,7 +20,7 @@ class AdminAutorController extends Controller
 
         Autor::create($request->all());
 
-        return redirect()->route('admin.materials.create')->with('success', 'Autor registrado exitosamente.');
+        return redirect()->route('admin.materials.create')->withInput($request->session()->get('_old_input'))->with('success', 'Autor creado exitosamente');
     }
 
     protected function validator(array $data)

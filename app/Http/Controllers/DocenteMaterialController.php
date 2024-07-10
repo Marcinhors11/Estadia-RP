@@ -75,18 +75,20 @@ class DocenteMaterialController extends Controller
         ]);
 
         // Crear una nueva instancia del material
-        $material = new Material();
-        $material->titulo = $request->titulo;
-        $material->autor_id = $request->autor_id;
-        $material->tipo_contenido_id = $request->tipo_contenido_id;
-        $material->asignatura_id = $request->asignatura_id;
-        $material->tema = $request->tema;
-        $material->academia_id = $request->academia_id;
-        $material->idioma_id = $request->idioma_id;
-        $material->fecha_publicacion = $request->fecha_publicacion;
-        $material->enlace = $request->enlace;
-        $material->descripcion = $request->descripcion;
-        $material->estatus_material = true; // Estatus por defecto activo
+        $material = Material::create([
+            'titulo' => $request->titulo,
+            'autor_id' => $request->autor_id,
+            'tipo_contenido_id' => $request->tipo_contenido_id,
+            'asignatura_id' => $request->asignatura_id,
+            'tema' => $request->tema,
+            'academia_id' => $request->academia_id,
+            'idioma_id' => $request->idioma_id,
+            'fecha_publicacion' => $request->fecha_publicacion,
+            'enlace' => $request->enlace,
+            'descripcion' => $request->descripcion,
+            'estatus_material' => true, // Estatus por defecto activo
+        ]);
+
         // Manejo del archivo
         if ($request->hasFile('archivo')) {
             // Eliminar archivo anterior si existe
@@ -113,7 +115,9 @@ class DocenteMaterialController extends Controller
             $material->imagen = $request->file('imagen')->store('materiales', 'public');
         }
 
-        $material->tags()->attach($request->tags);
+        if ($request->has('tags')) {
+            $material->tags()->attach($request->tags);
+        }
 
         // Asignar el ID del usuario autenticado (docente o administrador)
         $material->docente_id = Auth::id(); // O el campo adecuado para el ID del creador
@@ -182,16 +186,20 @@ class DocenteMaterialController extends Controller
         ]);
 
         // Actualizar los campos del material
-        $material->titulo = $request->titulo;
-        $material->autor_id = $request->autor_id;
-        $material->tipo_contenido_id = $request->tipo_contenido_id;
-        $material->asignatura_id = $request->asignatura_id;
-        $material->tema = $request->tema;
-        $material->academia_id = $request->academia_id;
-        $material->idioma_id = $request->idioma_id;
-        $material->fecha_publicacion = $request->fecha_publicacion;
-        $material->enlace = $request->enlace;
-        $material->descripcion = $request->descripcion;
+        $material->update([
+            'titulo' => $request->titulo,
+            'autor_id' => $request->autor_id,
+            'tipo_contenido_id' => $request->tipo_contenido_id,
+            'asignatura_id' => $request->asignatura_id,
+            'tema' => $request->tema,
+            'academia_id' => $request->academia_id,
+            'idioma_id' => $request->idioma_id,
+            'fecha_publicacion' => $request->fecha_publicacion,
+            'enlace' => $request->enlace,
+            'descripcion' => $request->descripcion,
+            'estatus_material' => true, // Estatus por defecto activo
+        ]);
+
         // Manejo del archivo
         if ($request->hasFile('archivo')) {
             // Eliminar archivo anterior si existe
@@ -218,6 +226,7 @@ class DocenteMaterialController extends Controller
             $material->imagen = $request->file('imagen')->store('materiales', 'public');
         }
 
+        // Sincroniza las etiquetas
         $material->tags()->sync($request->tags);
 
         // Guardar los cambios en la base de datos

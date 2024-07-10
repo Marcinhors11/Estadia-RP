@@ -33,17 +33,8 @@
                                 Materiales</a>
                             <a class="dropdown-item" href="{{ route('admin.materials.create') }}">Agregar Nuevo
                                 Material</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Bajas de Material
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="validarDropdown">
-                            <a class="dropdown-item" href="{{ route('admin.materials.solicitudes_baja') }}">Solicitudes
-                                de baja de materiales</a>
+                            <a class="dropdown-item" href="{{ route('admin.materials.solicitudes_baja') }}">Baja de
+                                materiales</a>
                         </div>
                     </li>
 
@@ -68,6 +59,7 @@
                         </ul>
                     </li>
                 </ul>
+                @include('busqueda.bar')
             </div>
 
             <!--  Docente  -->
@@ -100,8 +92,8 @@
                             </li>
                         </ul>
                     </li>
-
                 </ul>
+                @include('busqueda.bar')
             </div>
 
             <!--  Alumno  -->
@@ -127,22 +119,7 @@
 
                 </ul>
             </div>
-            <div>
-                <!-- Navbar content -->
-                <form class="d-flex" action="{{ route('alumno.contenido.search') }}" method="GET">
-                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar"
-                        name="query">
-                    <select class="form-select me-2" name="filter">
-                        <option value="">Todo</option>
-                        <option value="autor">Autor</option>
-                        <option value="docente">Docente</option>
-                        <option value="academia">Academia</option>
-                        <option value="asignatura">Asignatura</option>
-                    </select>
-                    <button class="btn btn-outline-success" type="submit">Buscar</button>
-                </form>
-
-            </div>
+            @include('busqueda.bar')
         @endif
 
         <!--Usuario-->
@@ -160,7 +137,7 @@
         </div>
 
         <!--Logout-->
-        <div class="px-4">
+        <div class="pe-3">
             <form action="{{ route('auth.logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="dropdown-item"><i class="fas fa-right-from-bracket px-1"

@@ -26,7 +26,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Imagen</th>
+                    <th>Portada</th>
                     <th>Título</th>
                     <th>Autor</th>
                     <th>Tipo</th>

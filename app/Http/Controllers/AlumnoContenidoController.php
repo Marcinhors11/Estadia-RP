@@ -15,11 +15,11 @@ class AlumnoContenidoController extends Controller
     //############################################## Indice Contenido Control ##########################################
     public function indexContenido()
     {
-        $autores = Autor::all();
-        $academias = Academia::all();
-        $asignaturas = Asignatura::all();
+        $autores = Autor::orderBy('apellido_paterno', 'asc')->get();
+        $asignaturas = Asignatura::orderBy('nombre_asignatura', 'asc')->get();
+        $academias = Academia::orderBy('nombre_academia', 'asc')->get();
+        $docentes = Docente::orderBy('apellido_paterno', 'asc')->get();
         $tiposContenido = TipoContenido::all();
-        $docentes = Docente::all();
         $fechasPublicacion = Material::selectRaw('DATE(fecha_publicacion) as fecha')->distinct()->orderBy('fecha', 'desc')->get()->pluck('fecha');
 
         return view('alumno.contenido.index', compact('autores', 'academias', 'asignaturas', 'tiposContenido', 'docentes', 'fechasPublicacion'));
@@ -27,11 +27,11 @@ class AlumnoContenidoController extends Controller
 
     public function home()
     {
-        $autores = Autor::all();
-        $academias = Academia::all();
-        $asignaturas = Asignatura::all();
+        $autores = Autor::orderBy('apellido_paterno', 'asc')->get();
+        $asignaturas = Asignatura::orderBy('nombre_asignatura', 'asc')->get();
+        $academias = Academia::orderBy('nombre_academia', 'asc')->get();
+        $docentes = Docente::orderBy('apellido_paterno', 'asc')->get();
         $tiposContenido = TipoContenido::all();
-        $docentes = Docente::all();
         $fechasPublicacion = Material::selectRaw('DATE(fecha_publicacion) as fecha')->distinct()->orderBy('fecha', 'desc')->get()->pluck('fecha');
 
         return view('alumno.system.home', compact('autores', 'academias', 'asignaturas', 'tiposContenido', 'docentes', 'fechasPublicacion'));
