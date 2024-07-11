@@ -9,34 +9,35 @@
         @include('errors.alerts')
         <h1>Detalle del Recurso</h1>
         <hr class="my-3">
-        <h4 class="mb-3">{{ $materiales->titulo }}</h4>
-        <p><strong>Descripción:</strong> {{ $materiales->descripcion }}</p>
+        <h4 class="mb-3">{{ $materiales->titulo }}</h4>  <!-- Titulo del material -->
+        <p><strong>Descripción:</strong> {{ $materiales->descripcion }}</p>  <!-- Descripción del material -->
         <p><strong>Autor:</strong> {{ $materiales->autor->nombre_autor }} {{ $materiales->autor->apellido_paterno }}
-            {{ $materiales->autor->apellido_materno }}</p>
-        <p><strong>Tipo de contenido:</strong> {{ $materiales->tipoContenido->nombre_contenido }}</p>
-        <p><strong>Asignatura:</strong> {{ $materiales->asignatura->nombre_asignatura }}</p>
-        <p><strong>Fecha de publicación:</strong> {{ $materiales->fecha_publicacion }}</p>
-        <p><strong>Etiquetas:</strong></p>
+            {{ $materiales->autor->apellido_materno }}</p>  <!-- Nombre del autor -->
+        <p><strong>Tipo de contenido:</strong> {{ $materiales->tipoContenido->nombre_contenido }}</p> <!-- Nombre del tipo de contenido del material -->
+        <p><strong>Asignatura:</strong> {{ $materiales->asignatura->nombre_asignatura }}</p>  <!-- Nombre de la asignatura -->
+        <p><strong>Fecha de publicación:</strong> {{ $materiales->fecha_publicacion }}</p>  <!-- Fecha de publicación del material -->
+        <p><strong>Etiquetas:</strong></p> <!-- Listar las Etiquetas del material -->
         <ul>
             @foreach ($materiales->tags as $tag)
                 <li class="d-inline p-1 mb-2 bg-primary text-white rounded-2">{{ $tag->nombre_tag }}</li>
             @endforeach
         </ul>
 
-        <!--Mostrar Enlaces/Descargar-->
+        <!--Mostrar Enlaces/Descargar de los materiales-->
         @if ($materiales->tipoContenido->nombre_contenido === 'Enlace')
             <div class="form-group mt-2">
                 <label for="enlace"><i class="fas fa-link"></i> Enlace</label>
                 <p><a href="{{ $materiales->enlace }}" target="_blank">{{ $materiales->enlace }}</a></p>
             </div>
         @elseif (
-            $materiales->tipoContenido->nombre_contenido === 'PDF' ||
-                $materiales->tipoContenido->nombre_contenido === 'Presentación' ||
-                $materiales->tipoContenido->nombre_contenido === 'Documento')
+            $material->tipoContenido->nombre_contenido === 'PDF' ||
+                $material->tipoContenido->nombre_contenido === 'Presentación' ||
+                $material->tipoContenido->nombre_contenido === 'Documento' ||
+                $material->tipoContenido->nombre_contenido === 'Excel')
             <div class="form-group mt-2">
                 <label for="archivo"><i class="fas fa-file-lines"></i> Archivo</label>
-                <p><a href="{{ Storage::url($materiales->archivo) }}"
-                        target="_blank">{{ Storage::url($materiales->archivo) }}</a></p>
+                <p><a href="{{ Storage::url($material->archivo) }}" target="_blank">{{ basename($material->archivo) }}</a>
+                </p>
             </div>
         @endif
 
@@ -44,8 +45,10 @@
         @if ($materiales->tipoContenido->nombre_contenido == 'PDF')
             <!--Mostrar Contenido PDF, PRESENTACIÓN-->
             <iframe src="{{ asset('storage/' . $materiales->archivo) }}" width="100%" height="600px"></iframe>
-        @elseif($materiales->tipoContenido->nombre_contenido == 'Presentación' ||
-                $materiales->tipoContenido->nombre_contenido === 'Documento')
+        @elseif(
+            $material->tipoContenido->nombre_contenido == 'Presentación' ||
+                $material->tipoContenido->nombre_contenido === 'Documento' ||
+                $material->tipoContenido->nombre_contenido === 'Excel')
             <iframe src="https://docs.google.com/gview?url={{ asset('storage/' . $materiales->archivo) }}&embedded=true"
                 width="100%" height="600px" class="embed-responsive-item"></iframe>
         @elseif($materiales->tipoContenido->nombre_contenido == 'Enlace')

@@ -9,15 +9,18 @@ class AlumnoBusquedaController extends Controller
 {
     public function search(Request $request)
     {
+        // Definir las variables query y filter
         $query = $request->input('query');
         $filter = $request->input('filter');
 
+        // Validar que se ingresa un termino de búsqueda en la barra
         if (empty($query)) {
             return redirect()->back()->with('error', 'Debe ingresar un término de búsqueda.');
         }
 
         $materials = Material::query();
 
+         // Switch case para los filtros de búsqueda establecidos
         switch ($filter) {
             case 'autor':
                 $materials->whereHas('autor', function ($q) use ($query) {
@@ -49,12 +52,15 @@ class AlumnoBusquedaController extends Controller
                 break;
         }
 
+        // Obtener los resultados de busqueda
         $results = $materials->get();
 
+        // Mensaje de error en caso de que la busqueda no exista
         if ($results->isEmpty()) {
             return redirect()->back()->with('error', 'No se encontraron resultados.');
         }
 
+        // Redirigir a la página de contenido con los resultados de la busqueda
         return view('alumno.contenido.search', compact('results', 'query', 'filter'));
     }
 }

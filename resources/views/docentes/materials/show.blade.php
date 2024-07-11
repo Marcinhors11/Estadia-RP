@@ -32,11 +32,12 @@
         @elseif (
             $material->tipoContenido->nombre_contenido === 'PDF' ||
                 $material->tipoContenido->nombre_contenido === 'Presentación' ||
-                $material->tipoContenido->nombre_contenido === 'Documento')
+                $material->tipoContenido->nombre_contenido === 'Documento' ||
+                $material->tipoContenido->nombre_contenido === 'Excel')
             <div class="form-group mt-2">
                 <label for="archivo"><i class="fas fa-file-lines"></i> Archivo</label>
-                <p><a href="{{ Storage::url($material->archivo) }}"
-                        target="_blank">{{ Storage::url($material->archivo) }}</a></p>
+                <p><a href="{{ Storage::url($material->archivo) }}" target="_blank">{{ basename($material->archivo) }}</a>
+                </p>
             </div>
         @endif
 
@@ -44,8 +45,10 @@
         @if ($material->tipoContenido->nombre_contenido == 'PDF')
             <!--Mostrar Contenido PDF, PRESENTACIÓN-->
             <iframe src="{{ asset('storage/' . $material->archivo) }}" width="100%" height="600px"></iframe>
-        @elseif($material->tipoContenido->nombre_contenido == 'Presentación' ||
-                $material->tipoContenido->nombre_contenido === 'Documento')
+        @elseif(
+            $material->tipoContenido->nombre_contenido == 'Presentación' ||
+                $material->tipoContenido->nombre_contenido === 'Documento' ||
+                $material->tipoContenido->nombre_contenido === 'Excel')
             <iframe src="https://docs.google.com/gview?url={{ asset('storage/' . $material->archivo) }}&embedded=true"
                 width="100%" height="600px" class="embed-responsive-item"></iframe>
         @elseif($material->tipoContenido->nombre_contenido == 'Enlace')

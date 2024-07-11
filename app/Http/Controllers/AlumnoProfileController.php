@@ -12,13 +12,13 @@ class AlumnoProfileController extends Controller
 {
     public function edit()
     {
-        $alumno = Auth::guard('alumno')->user();
+        $alumno = Auth::guard('alumno')->user(); // Obtener los datos del usuario
         return view('alumno.profile.edit', compact('alumno'));
     }
 
     public function update(Request $request)
     {
-        $alumno = Auth::guard('alumno')->user();
+        $alumno = Auth::guard('alumno')->user(); // Obtener los datos del usuario
 
         // Actualizar solo si hay cambios
         $request->validate([
@@ -29,19 +29,22 @@ class AlumnoProfileController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 
+        // Obtener el nombre y apellidos del usuario
         $alumno->nombre_alumno = $request->input('nombre_alumno');
         $alumno->apellido_paterno = $request->input('apellido_paterno');
         $alumno->apellido_materno = $request->input('apellido_materno');
 
+        // Verificar que el usuario este autenticado para poder cambiar su correo
         if (Auth::guard('alumno')->check()) {
             $alumno->correo = $request->correo;
         }
 
+        // Validar que se está cambiando la contraseña para guardar los cambios
         if ($request->filled('password')) {
             $alumno->password = Hash::make($request->password);
         }
 
-        $alumno->save();
+        $alumno->save(); // Guardar los cambios
 
         return redirect()->route('alumno.profile.edit')->with('success', 'Perfil actualizado correctamente.');
     }

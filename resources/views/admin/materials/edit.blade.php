@@ -30,7 +30,10 @@
                             </option>
                         @endforeach
                     </select>
-                    <a href="{{ route('admin.autores.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo Autor</a>
+                    <button type="button" class="btn btn-secondary btn-sm mt-2" data-toggle="modal"
+                        data-target="#nuevoAutorModal">
+                        Nuevo Autor
+                    </button>
                 </div>
 
                 <!--  Box Date  -->
@@ -58,31 +61,12 @@
                     @endif
                 </div>
 
-                <!--  Box Tipo Contenido  -->
-                <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="tipo_contenido">Tipo de Contenido</label>
-                    <select name="tipo_contenido_id" id="tipo_contenido" class="form-control" required>
-                        @foreach ($tipoContenidos as $tipoContenido)
-                            <option value="{{ $tipoContenido->id }}"
-                                {{ $tipoContenido->id == $material->tipo_contenido_id ? 'selected' : '' }}>
-                                {{ $tipoContenido->nombre_contenido }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('tipo_contenidos.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo Tipo de
-                            Contenido</a>
-                    @endif
-                </div>
-
                 <!--  Box Description  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="descripcion">Descripción</label>
                     <textarea class="form-control" id="descripcion" name="descripcion">{{ old('descripcion', $material->descripcion) }}</textarea>
                 </div>
-            </div>
 
-            <div class="row">
                 <!--  Box Imagen  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="imagen">Imagen Previsualización</label>
@@ -92,7 +76,9 @@
                                 target="_blank">{{ $material->imagen }}</a></p>
                     @endif
                 </div>
+            </div>
 
+            <div class="row">
                 <!--  Box Tema  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="tema">Tema</label>
@@ -116,9 +102,7 @@
                             Asignatura</a>
                     @endif
                 </div>
-            </div>
 
-            <div class="row">
                 <!--  Box Academia  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="academia">Academia</label>
@@ -135,32 +119,33 @@
                             Academia</a>
                     @endif
                 </div>
+            </div>
 
-                <!--  Box Archivo  -->
-                <div class="form-group col-md-4 m-auto mt-3 p-3" id="archivo-group" style="display:none;">
-                    <label for="archivo">Archivo (PDF o Presentación)</label>
-                    <input type="file" name="archivo" id="archivo" class="form-control">
+            <div class="row">
+                <!-- Campo Archivo -->
+                <div class="form-group col-md-4 m-auto mt-3 p-3">
+                    <label for="archivo">Archivo</label>
+                    <input type="file" name="archivo" id="archivo" class="form-control"
+                        accept=".pdf,.docx,.pptx,.xlsx,.jpg,.png,.jpeg">
                     @if ($material->archivo)
                         <p>Archivo actual: <a href="{{ asset('storage/' . $material->archivo) }}"
                                 target="_blank">{{ $material->archivo }}</a></p>
                     @endif
                 </div>
 
-
-                <!--  Box Enlace  -->
-                <div class="form-group col-md-4 m-auto mt-3 p-3" id="enlace-group" style="display:none;">
-                    <label for="enlace">Enlace (YouTube)</label>
-                    <input type="url" name="enlace" class="form-control" id="enlace"
-                        value="{{ old('enlace', $material->enlace) }}">
+                <!-- Campo Enlace -->
+                <div class="form-group col-md-4 m-auto mt-3 p-3">
+                    <label for="enlace">Enlace</label>
+                    <input type="url" name="enlace" id="enlace" value="{{ old('enlace', $material->enlace) }}"
+                        class="form-control" placeholder="http://">
                 </div>
 
                 <!--  Box Etiquetas  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="tags">Etiquetas:</label>
                     <select name="tags[]" id="tags" class="form-control" multiple>
-                        @foreach($tags as $tag)
-                            <option value="{{ $tag->id }}"
-                                @if($material->tags->contains($tag->id)) selected @endif>
+                        @foreach ($tags as $tag)
+                            <option value="{{ $tag->id }}" @if ($material->tags->contains($tag->id)) selected @endif>
                                 {{ $tag->nombre_tag }}
                             </option>
                         @endforeach
@@ -181,37 +166,17 @@
             </div>
         </form>
     </div>
+    @include('admin.autores.create') <!-- Incluir el modal aquí -->
 @endsection
 
 @section('scripts')
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var tipoContenido = document.getElementById('tipo_contenido');
-            var archivoGroup = document.getElementById('archivo-group');
-            var enlaceGroup = document.getElementById('enlace-group');
-
-            function toggleFields() {
-                var selectedOption = tipoContenido.options[tipoContenido.selectedIndex].text;
-                if (selectedOption === 'PDF' || selectedOption === 'Presentación') {
-                    archivoGroup.style.display = 'block';
-                    enlaceGroup.style.display = 'none';
-                } else if (selectedOption === 'Enlace') {
-                    archivoGroup.style.display = 'none';
-                    enlaceGroup.style.display = 'block';
-                } else {
-                    archivoGroup.style.display = 'none';
-                    enlaceGroup.style.display = 'none';
-                }
-            }
-
-            tipoContenido.addEventListener('change', toggleFields);
-
-            // Run on initial load
-            toggleFields();
-
-            $(document).ready(function() {
+        $(document).ready(function() {
+            $('#nuevoModal').on('hidden.bs.modal', function() {
+                $(this).find('form').trigger('reset');
+            });
             $('#tags').select2();
-        });
         });
     </script>
 @endsection

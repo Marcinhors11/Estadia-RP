@@ -22,20 +22,21 @@ class AdminController extends Controller
     /* Register */
     public function showRegistrationForm()
     {
-        return view('admin.register');
+        return view('admin.register'); // Redirigir a la página de registro de administradores
     }
 
     public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
-
+        $this->validator($request->all())->validate(); // Verificar que los datos han sido validados
         $this->create($request->all());
 
+        // Redirigir a la página de inicio de sesión con un mensaje de exito
         return redirect()->route('auth.login.form')->with('success', 'Registro exitoso. Ahora puedes iniciar sesión.');
     }
 
     protected function validator(array $data)
     {
+        // Validar los datos del formulario
         return Validator::make($data, [
             'nombre_admin' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
             'apellido_paterno' => ['required', 'string', 'max:255', 'regex:/^[\p{L}\s]+$/u'],
@@ -47,6 +48,7 @@ class AdminController extends Controller
 
     protected function create(array $data)
     {
+        // Crear la instancia del administrador
         return Administrador::create([
             'nombre_admin' => $data['nombre_admin'],
             'apellido_paterno' => $data['apellido_paterno'],
@@ -56,42 +58,13 @@ class AdminController extends Controller
         ]);
     }
 
-    /* Login
-    public function showLoginForm()
-    {
-        return view('auth.login');
-    }
-
-    public function login(Request $request)
-    {
-        $request->validate([
-            'correo' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-
-        $credentials = $request->only('correo', 'password');
-
-        if (Auth::guard('administrador')->attempt($credentials)) {
-            return redirect()->intended('/home');
-        }
-
-        return redirect()->back()->with('error', 'Correo o contraseña incorrectos.');
-    }
-    //logout
-    public function logout()
-    {
-        Auth::guard('administrador')->logout();
-        return redirect()->route('auth.login.form');
-    }*/
-
     /* Validación Docentes */
-
     public function validateDocente($id)
     {
-        $docente = Docente::findOrFail($id);
-        $docente->validado = true;
+        $docente = Docente::findOrFail($id); // Obtener todos los docentes mediante el id
+        $docente->validado = true; // Validar su registro en el sistema
         $docente->save();
-
+        // Redirigir a la página validar docentes con un mensaje de exito
         return redirect()->route('admin.system.validate-docentes')->with('success', 'Docente validado exitosamente.');
     }
 }

@@ -7,6 +7,7 @@
             <a href="{{ route('admin.system.home') }}"
                 class="btn btn-primary mt-1 mb-4 position-absolute top-0 end-0">Regresar</a>
         </div>
+        <!-- Titulo de la vista-->
         <h2>
             Materiales de
             @if (isset($autor))
@@ -24,6 +25,7 @@
             @endif
         </h2>
 
+        <!-- Listar los materiales en la tabla -->
         <table class="table">
             <thead>
                 <tr>
@@ -38,6 +40,7 @@
                 @foreach ($materiales as $material)
                     <tr>
                         <td>
+                            <!-- Mostrar la imagen del material, en caso de no tener imagen muestra el texto -->
                             @if ($material->imagen)
                                 <img src="{{ asset('storage/' . $material->imagen) }}" alt="{{ $material->nombre }}"
                                     style="max-width: 100px;">
@@ -45,10 +48,10 @@
                                 Sin imagen
                             @endif
                         </td>
-                        <td class="w-50 p-3" style="text-align: justify;">{{ $material->titulo }}</td>
+                        <td class="w-50 p-3" style="text-align: justify;">{{ $material->titulo }}</td> <!-- Titulo del material -->
                         <td>{{ $material->autor->nombre_autor }} {{ $material->autor->apellido_paterno }}
                             {{ $material->autor->apellido_materno }}</td>
-                        <td>{{ $material->tipoContenido->nombre_contenido }}</td>
+                        <td>{{ $material->tipoContenido->nombre_contenido }}</td> <!-- Nombre del autor -->
                         <td>
                             <a href="{{ route('admin.contenido.show', $material->id) }}" class="btn btn-info">Ver</a>
                         </td>

@@ -22,15 +22,17 @@
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="autor">Autor</label>
                     <select class="form-control" id="autor" name="autor_id" required>
-                        <option selected value="nuevo" class="text-secondary">Seleccionar</option>
+                        <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($autores as $autor)
                             <option value="{{ $autor->id }}" {{ old('autor_id') == $autor->id ? 'selected' : '' }}>
                                 {{ $autor->apellido_paterno }}
                                 {{ $autor->apellido_materno }} {{ $autor->nombre_autor }}</option>
                         @endforeach
                     </select>
-                    <a href="{{ route('docentes.autores.create') }}" class="btn btn-secondary btn-sm mt-2">Nuevo
-                        Autor</a>
+                    <button type="button" class="btn btn-secondary btn-sm mt-2" data-toggle="modal"
+                        data-target="#nuevoAutorModal">
+                        Nuevo Autor
+                    </button>
                 </div>
 
                 <!--  Box Date  -->
@@ -46,7 +48,7 @@
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="idioma">Idioma</label>
                     <select name="idioma_id" id="idioma" class="form-control" required>
-                        <option selected value="nuevo" class="text-secondary">Seleccionar</option>
+                        <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($idiomas as $idioma)
                             <option value="{{ $idioma->id }}" {{ old('idioma_id') == $idioma->id ? 'selected' : '' }}>
                                 {{ $idioma->nombre_idioma }}</option>
@@ -57,33 +59,20 @@
                     @endif
                 </div>
 
-                <!--  Box Tipo Contenido  -->
-                <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="tipo_contenido">Tipo de Contenido</label>
-                    <select name="tipo_contenido_id" id="tipo_contenido" class="form-control" required>
-                        <option selected value="nuevo" class="text-secondary">Seleccionar</option>
-                        @foreach ($tipoContenidos as $tipoContenido)
-                            <option value="{{ $tipoContenido->id }}"
-                                {{ old('tipo_contenido_id') == $tipoContenido->id ? 'selected' : '' }}>
-                                {{ $tipoContenido->nombre_contenido }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
                 <!--  Box Description  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="descripcion">Descripción</label>
                     <textarea class="form-control" id="descripcion" name="descripcion">{{ old('descripcion') }}</textarea>
                 </div>
-            </div>
 
-            <div class="row">
                 <!--  Box Imagen  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="imagen">Imagen/Portada Previsualización</label>
                     <input type="file" id="imagen" name="imagen" class="form-control">
                 </div>
+            </div>
 
+            <div class="row">
                 <!--  Box Tema  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="tema">Tema</label>
@@ -95,42 +84,51 @@
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="asignatura">Asignatura</label>
                     <select name="asignatura_id" id="asignatura" class="form-control" required>
-                        <option selected value="nuevo" class="text-secondary">Seleccionar</option>
+                        <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($asignaturas as $asignatura)
                             <option value="{{ $asignatura->id }}"
                                 {{ old('asignatura_id') == $asignatura->id ? 'selected' : '' }}>
                                 {{ $asignatura->nombre_asignatura }}</option>
                         @endforeach
                     </select>
+                    @if (Auth::guard('administrador')->check())
+                        <a href="{{ route('asignaturas.create') }}" class="btn btn-secondary btn-sm mt-2">Nueva
+                            Asignatura</a>
+                    @endif
                 </div>
-            </div>
 
-            <div class="row">
                 <!--  Box Academia  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="academia">Academia</label>
                     <select name="academia_id" id="academia" class="form-control" required>
-                        <option selected value="nuevo" class="text-secondary">Seleccionar</option>
+                        <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($academias as $academia)
                             <option value="{{ $academia->id }}"
                                 {{ old('academia_id') == $academia->id ? 'selected' : '' }}>
                                 {{ $academia->nombre_academia }}</option>
                         @endforeach
                     </select>
+                    @if (Auth::guard('administrador')->check())
+                        <a href="{{ route('academias.create') }}" class="btn btn-secondary btn-sm mt-2">Nueva
+                            Academia</a>
+                    @endif
                 </div>
 
-                <!--  Box Archivo  -->
-                <div class="form-group col-md-4 m-auto mt-3 p-3" id="archivo-group" style="display:none;">
-                    <label for="archivo">Archivo (pdf,doc,docx,ppt,pptx,zip)</label>
-                    <input type="file" name="archivo" id="archivo" class="form-control">
+            </div>
+
+            <div class="row">
+                <!-- Campo Archivo -->
+                <div class="form-group col-md-4 m-auto mt-3 p-3">
+                    <label for="archivo">Archivo</label>
+                    <input type="file" name="archivo" id="archivo" class="form-control"
+                        accept=".pdf,.docx,.pptx,.xlsx,.jpg,.png,.jpeg">
                 </div>
 
-
-                <!--  Box Enlace  -->
-                <div class="form-group col-md-4 m-auto mt-3 p-3" id="enlace-group" style="display:none;">
-                    <label for="enlace">Enlace (YouTube)</label>
-                    <input type="url" name="enlace" id="enlace" class="form-control"
-                        value="{{ old('enlace') }}">
+                <!-- Campo Enlace -->
+                <div class="form-group col-md-4 m-auto mt-3 p-3">
+                    <label for="enlace">Enlace</label>
+                    <input type="url" name="enlace" id="enlace" value="{{ old('enlace') }}" class="form-control"
+                        placeholder="http://">
                 </div>
 
                 <!--  Box Etiquetas  -->
@@ -157,37 +155,16 @@
             </div>
         </form>
     </div>
+    @include('docentes.autores.create') <!-- Incluir el modal aquí -->
 @endsection
 
 @section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var tipoContenido = document.getElementById('tipo_contenido');
-            var archivoGroup = document.getElementById('archivo-group');
-            var enlaceGroup = document.getElementById('enlace-group');
-
-            function toggleFields() {
-                var selectedOption = tipoContenido.options[tipoContenido.selectedIndex].text;
-                if (selectedOption === 'PDF' || selectedOption === 'Presentación' || selectedOption === 'Documento') {
-                    archivoGroup.style.display = 'block';
-                    enlaceGroup.style.display = 'none';
-                } else if (selectedOption === 'Enlace') {
-                    archivoGroup.style.display = 'none';
-                    enlaceGroup.style.display = 'block';
-                } else {
-                    archivoGroup.style.display = 'none';
-                    enlaceGroup.style.display = 'none';
-                }
-            }
-
-            tipoContenido.addEventListener('change', toggleFields);
-
-            // Run on initial load
-            toggleFields();
-        });
-    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('#nuevoModal').on('hidden.bs.modal', function() {
+                $(this).find('form').trigger('reset');
+            });
             $('#tags').select2();
         });
     </script>

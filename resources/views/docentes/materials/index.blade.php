@@ -25,15 +25,18 @@
                             {{ $material->estatus_material ? 'Activo' : 'Inactivo' }}
                         </td>
                         <td>
-                            <a href="{{ route('docentes.materials.show', $material->id) }}" class="btn btn-info"><i
-                                    class="fas fa-eye"></i></a>
-                            <a href="{{ route('docentes.materials.edit', $material->id) }}" class="btn btn-warning"><i
-                                    class="fas fa-pen-to-square"></i></a>
-                            @if ($material->solicitudesBaja()->where('pendiente', true)->exists())
-                                <span class="badge bg-warning text-dark">Baja pendiente</span>
+                            <a href="{{ route('docentes.materials.show', $material->id) }}" class="btn btn-info">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            @if (!$material->solicitudesBaja()->where('pendiente', true)->exists())
+                                <a href="{{ route('docentes.materials.edit', $material->id) }}" class="btn btn-warning">
+                                    <i class="fas fa-pen-to-square"></i>
+                                </a>
+                                <a href="{{ route('docentes.materials.solicitar_baja_form', $material->id) }}" class="btn btn-danger">
+                                    Solicitar Baja
+                                </a>
                             @else
-                                <a href="{{ route('docentes.materials.solicitar_baja_form', $material->id) }}"
-                                    class="btn btn-danger">Solicitar Baja</a>
+                                <span class="badge bg-warning text-dark">Baja pendiente</span>
                             @endif
                         </td>
                     </tr>
