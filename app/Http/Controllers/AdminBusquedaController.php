@@ -23,9 +23,7 @@ class AdminBusquedaController extends Controller
         // Switch case para los filtros de búsqueda establecidos
         switch ($filter) {
             case 'titulo':
-                $materials->whereHas('titulo', function ($q) use ($query) {
-                    $q->where('titulo', 'like', '%' . $query . '%');
-                });
+                $materials->where('titulo', 'like', '%' . $query . '%');
                 break;
             case 'autor':
                 $materials->whereHas('autor', function ($q) use ($query) {
