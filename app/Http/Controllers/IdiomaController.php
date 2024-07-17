@@ -22,8 +22,19 @@ class IdiomaController extends Controller
     {
         // Verificar que los datos ingresados al formulario esten validados
         $this->validator($request->all())->validate();
+
+        // Validar que el idioma existe para no duplicar los registros
+        $idiomaExistente = Idioma::where('nombre_idioma', $request->nombre_idioma)
+            ->first();
+
+        // Redirigir a la página de materiales con un mensaje de error en caso de que se ya exista un idioma
+        if ($idiomaExistente) {
+            return redirect()->route('admin.materials.create')->withInput()->withErrors(['idioma_duplicado' => 'El idioma ya existe.']);
+        }
+
         // Crear la instancia de la Academia
         Idioma::create($request->all());
+
         // Redirigir a la página de materiales con un mensaje de éxito
         return redirect()->route('admin.materials.create')->with('success', 'Idioma creado con éxito.');
     }

@@ -1,19 +1,24 @@
-@extends('layouts.app')
-
-@section('content')
-    <div class="container">
-        <h1>Agregar Nueva Acedemia</h1>
-        @include('errors.alerts')
-        <form action="{{ route('academias.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="nombre_academia">Academia</label>
-                <input type="text" name="nombre_academia" id="nombre_academia" class="form-control" required>
-                @error('nombre_academia')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
+<div class="modal fade" id="modalCreateAcademia" tabindex="-1" aria-labelledby="modalCreateAcademiaLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCreateAcademiaLabel">Nueva Academia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-        </form>
+            <div class="modal-body">
+                <form id="formCreateAcademia" action="{{ route('academias.store') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="nombre_academia">Nombre de la Academia</label>
+                        <input type="text" class="form-control" id="nombre_academia" name="nombre_academia" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    onclick="document.getElementById('formCreateAcademia').submit()">Guardar</button>
+            </div>
+        </div>
     </div>
-@endsection
+</div>

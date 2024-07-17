@@ -14,7 +14,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/index.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
@@ -47,12 +47,16 @@
             </div>
     </header>
 
-
-    <section class="d-flex mt-3 m-auto">
+    <!-- Contenido de la página -->
+    <div class="container mt-3 m-auto">
         @yield('content')
-    </section>
+    </div>
 
-    <!--Bootstrap JS-->
+    <!-- Incluir el pie de página aquí -->
+    @include('layouts.footer')
+
+
+    <!-- Enlaces a scripts de JS, etc. -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>

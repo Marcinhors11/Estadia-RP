@@ -55,9 +55,6 @@
                             </option>
                         @endforeach
                     </select>
-                    @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('idiomas.create') }}" class="btn btn-secondary btn-sm mt-2">Añadir Idioma</a>
-                    @endif
                 </div>
 
                 <!--  Box Description  -->
@@ -97,10 +94,6 @@
                             </option>
                         @endforeach
                     </select>
-                    @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('asignaturas.create') }}" class="btn btn-secondary btn-sm mt-2">Nueva
-                            Asignatura</a>
-                    @endif
                 </div>
 
                 <!--  Box Academia  -->
@@ -114,10 +107,6 @@
                             </option>
                         @endforeach
                     </select>
-                    @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('academias.create') }}" class="btn btn-secondary btn-sm mt-2">Nueva
-                            Academia</a>
-                    @endif
                 </div>
             </div>
 
@@ -151,13 +140,10 @@
                             </option>
                         @endforeach
                     </select>
-                    @if (Auth::guard('docente')->check())
-                        <a href="{{ route('docentes.tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
-                            Etiqueta</a>
-                    @elseif (Auth::guard('administrador')->check())
-                        <a href="{{ route('tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
-                            Etiqueta</a>
-                    @endif
+                    <button type="button" class="btn btn-secondary btn-sm mt-2" data-bs-toggle="modal"
+                        data-bs-target="#modalCreateEtiqueta">
+                        Nueva Etiqueta
+                    </button>
                 </div>
             </div>
 
@@ -167,7 +153,9 @@
             </div>
         </form>
     </div>
-    @include('docentes.autores.create') <!-- Incluir el modal aquí -->
+    <!-- Incluir los modales -->
+    @include('docentes.autores.create')
+    @include('docentes.tags.create')
 @endsection
 
 @section('scripts')

@@ -55,7 +55,10 @@
                         @endforeach
                     </select>
                     @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('idiomas.create') }}" class="btn btn-secondary btn-sm mt-2">Añadir Idioma</a>
+                        <button type="button" class="btn btn-secondary btn-sm mt-2" data-bs-toggle="modal"
+                            data-bs-target="#modalCreateIdioma">
+                            Nuevo Idioma
+                        </button>
                     @endif
                 </div>
 
@@ -92,8 +95,10 @@
                         @endforeach
                     </select>
                     @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('asignaturas.create') }}" class="btn btn-secondary btn-sm mt-2">Nueva
-                            Asignatura</a>
+                        <button type="button" class="btn btn-secondary btn-sm mt-2" data-bs-toggle="modal"
+                            data-bs-target="#modalCreateAsignatura">
+                            Nueva Asignatura
+                        </button>
                     @endif
                 </div>
 
@@ -109,8 +114,10 @@
                         @endforeach
                     </select>
                     @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('academias.create') }}" class="btn btn-secondary btn-sm mt-2">Nueva
-                            Academia</a>
+                        <button type="button" class="btn btn-secondary btn-sm mt-2" data-bs-toggle="modal"
+                            data-bs-target="#modalCreateAcademia">
+                            Nueva Academia
+                        </button>
                     @endif
                 </div>
 
@@ -127,7 +134,8 @@
                 <!-- Campo Enlace -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
                     <label for="enlace">Enlace</label>
-                    <input type="url" name="enlace" id="enlace" value="{{old ('enlace')}}" class="form-control" placeholder="http://">
+                    <input type="url" name="enlace" id="enlace" value="{{ old('enlace') }}"
+                        class="form-control" placeholder="http://">
                 </div>
 
                 <!--  Box Etiquetas  -->
@@ -138,13 +146,11 @@
                             <option value="{{ $tag->id }}">{{ $tag->nombre_tag }}</option>
                         @endforeach
                     </select>
-                    @if (Auth::guard('docente')->check())
-                        <a href="{{ route('docentes.tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
-                            Etiqueta</a>
-                    @elseif (Auth::guard('administrador')->check())
-                        <a href="{{ route('tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
-                            Etiqueta</a>
-                    @endif
+                    <button type="button" class="btn btn-secondary btn-sm mt-2" data-bs-toggle="modal"
+                        data-bs-target="#modalCreateEtiqueta">
+                        Nueva Etiqueta
+                    </button>
+
                 </div>
             </div>
 
@@ -154,7 +160,12 @@
             </div>
         </form>
     </div>
-    @include('admin.autores.create') <!-- Incluir el modal aquí -->
+    <!-- Incluir los modales -->
+    @include('admin.autores.create')
+    @include('idiomas.create')
+    @include('academias.create')
+    @include('asignaturas.create')
+    @include('tags.create')
 @endsection
 
 @section('scripts')

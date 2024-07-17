@@ -9,6 +9,14 @@ body {
     flex-direction: column;
 }
 
+header .container{
+    background-color: #f8f8f8;
+}
+
+header .container h1,h4{
+    color: #8a2036;
+}
+
 footer {
     flex-shrink: 0;
 }

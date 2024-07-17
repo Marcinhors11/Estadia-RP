@@ -9,7 +9,8 @@
         method="GET">
         <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar" name="query">
         <select class="form-select me-2" name="filter">
-            <option value="">Todo</option>
+            <option value="">Buscar en todo</option>
+            <option value="titulo">Título</option>
             <option value="autor">Autor</option>
             <option value="docente">Docente</option>
             <option value="academia">Academia</option>

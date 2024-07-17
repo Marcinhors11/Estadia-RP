@@ -24,8 +24,11 @@
                         <input type="text" name="apellido_materno" id="apellido_materno" class="form-control"
                             value="{{ old('apellido_materno') }}">
                     </div>
-                    <button type="submit" class="btn btn-primary my-4">Guardar</button>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                    onclick="document.getElementById('formNuevoAutor').submit()">Guardar</button>
             </div>
         </div>
     </div>

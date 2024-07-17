@@ -23,8 +23,19 @@ class AsignaturaController extends Controller
     {
         // Verificar que los datos ingresados al formulario esten validados
         $this->validator($request->all())->validate();
+
+        // Validar que la asigantura existe para no duplicar los registros
+        $asignaturaExistente = Asignatura::where('nombre_asignatura', $request->nombre_asignatura)
+            ->first();
+
+        // Redirigir a la página de materiales con un mensaje de error en caso de que se ya exista una asigantura
+        if ($asignaturaExistente) {
+            return redirect()->route('admin.materials.create')->withInput()->withErrors(['asignatura_duplicado' => 'La asigantura ya existe.']);
+        }
+
         // Crear la instancia de la Academia
         Asignatura::create($request->all());
+
         // Redirigir a la página de materiales con un mensaje de éxito
         return redirect()->route('admin.materials.create')->with('success', 'Asignatura creado con éxito.');
     }

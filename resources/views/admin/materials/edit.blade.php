@@ -50,14 +50,16 @@
                     <label for="idioma">Idioma</label>
                     <select name="idioma_id" id="idioma" class="form-control" required>
                         @foreach ($idiomas as $idioma)
-                            <option value="{{ $idioma->id }}"
-                                {{ $idioma->id == $material->idioma_id ? 'selected' : '' }}>
+                            <option value="{{ $idioma->id }}" {{ $idioma->id == $material->idioma_id ? 'selected' : '' }}>
                                 {{ $idioma->nombre_idioma }}
                             </option>
                         @endforeach
                     </select>
                     @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('idiomas.create') }}" class="btn btn-secondary btn-sm mt-2">Añadir Idioma</a>
+                        <button type="button" class="btn btn-secondary btn-sm mt-2" data-bs-toggle="modal"
+                            data-bs-target="#modalCreateIdioma">
+                            Nuevo Idioma
+                        </button>
                     @endif
                 </div>
 
@@ -98,8 +100,10 @@
                         @endforeach
                     </select>
                     @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('asignaturas.create') }}" class="btn btn-secondary btn-sm mt-2">Nueva
-                            Asignatura</a>
+                        <button type="button" class="btn btn-secondary btn-sm mt-2" data-bs-toggle="modal"
+                            data-bs-target="#modalCreateAsignatura">
+                            Nueva Asignatura
+                        </button>
                     @endif
                 </div>
 
@@ -115,8 +119,10 @@
                         @endforeach
                     </select>
                     @if (Auth::guard('administrador')->check())
-                        <a href="{{ route('academias.create') }}" class="btn btn-secondary btn-sm mt-2">Nueva
-                            Academia</a>
+                        <button type="button" class="btn btn-secondary btn-sm mt-2" data-bs-toggle="modal"
+                            data-bs-target="#modalCreateAcademia">
+                            Nueva Academia
+                        </button>
                     @endif
                 </div>
             </div>
@@ -150,13 +156,10 @@
                             </option>
                         @endforeach
                     </select>
-                    @if (Auth::guard('docente')->check())
-                        <a href="{{ route('docentes.tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
-                            Etiqueta</a>
-                    @elseif (Auth::guard('administrador')->check())
-                        <a href="{{ route('tags.create') }}" class="btn btn-secondary btn-sm mt-2">Crear Nueva
-                            Etiqueta</a>
-                    @endif
+                    <button type="button" class="btn btn-secondary btn-sm mt-2" data-bs-toggle="modal"
+                        data-bs-target="#modalCreateEtiqueta">
+                        Nueva Etiqueta
+                    </button>
                 </div>
             </div>
 
@@ -166,7 +169,12 @@
             </div>
         </form>
     </div>
-    @include('admin.autores.create') <!-- Incluir el modal aquí -->
+    <!-- Incluir los modales -->
+    @include('admin.autores.create')
+    @include('idiomas.create')
+    @include('academias.create')
+    @include('asignaturas.create')
+    @include('tags.create')
 @endsection
 
 @section('scripts')

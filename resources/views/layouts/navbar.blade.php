@@ -29,12 +29,12 @@
                             Materiales
                         </a>
                         <div class="dropdown-menu" aria-labelledby="materialesDropdown">
+                            <a class="dropdown-item" href="{{ route('admin.materials.create') }}">Nuevo
+                                Material</a>
                             <a class="dropdown-item" href="{{ route('admin.materials.index') }}">Consultar
                                 Materiales</a>
-                            <a class="dropdown-item" href="{{ route('admin.materials.create') }}">Agregar Nuevo
-                                Material</a>
                             <a class="dropdown-item" href="{{ route('admin.materials.solicitudes_baja') }}">Baja de
-                                materiales</a>
+                                Materiales</a>
                         </div>
                     </li>
 
@@ -76,10 +76,10 @@
                             Materiales
                         </a>
                         <div class="dropdown-menu" aria-labelledby="materialesDropdown">
+                            <a class="dropdown-item" href="{{ route('docentes.materials.create') }}">Nuevo
+                                Material</a>
                             <a class="dropdown-item" href="{{ route('docentes.materials.index') }}">Consultar
                                 Materiales</a>
-                            <a class="dropdown-item" href="{{ route('docentes.materials.create') }}">Agregar Nuevo
-                                Material</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">

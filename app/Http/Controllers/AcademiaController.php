@@ -22,8 +22,19 @@ class AcademiaController extends Controller
     {
         // Verificar que los datos ingresados al formulario esten validados
         $this->validator($request->all())->validate();
+
+        // Validar que la academia existe para no duplicar los registros
+        $academiaExistente = Academia::where('nombre_academia', $request->nombre_academia)
+            ->first();
+
+        // Redirigir a la página de materiales con un mensaje de error en caso de que se ya exista una academia
+        if ($academiaExistente) {
+            return redirect()->route('admin.materials.create')->withInput()->withErrors(['academia_duplicado' => 'La academia ya existe.']);
+        }
+
         // Crear la instancia de la Academia
         Academia::create($request->all());
+
         // Redirigir a la página de materiales con un mensaje de éxito
         return redirect()->route('admin.materials.create')->with('success', 'Academia creado con éxito.');
     }

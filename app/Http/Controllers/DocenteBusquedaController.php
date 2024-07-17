@@ -22,14 +22,23 @@ class DocenteBusquedaController extends Controller
 
         // Switch case para los filtros de búsqueda establecidos
         switch ($filter) {
+            case 'titulo':
+                $materials->whereHas('titulo', function ($q) use ($query) {
+                    $q->where('titulo', 'like', '%' . $query . '%');
+                });
+                break;
             case 'autor':
                 $materials->whereHas('autor', function ($q) use ($query) {
-                    $q->where('nombre_autor', 'like', '%' . $query . '%');
+                    $q->where('nombre_autor', 'like', '%' . $query . '%')
+                        ->orWhere('apellido_paterno', 'like', '%' . $query . '%')
+                        ->orWhere('apellido_materno', 'like', '%' . $query . '%');
                 });
                 break;
             case 'docente':
                 $materials->whereHas('docente', function ($q) use ($query) {
-                    $q->where('nombre_docente', 'like', '%' . $query . '%');
+                    $q->where('nombre_docente', 'like', '%' . $query . '%')
+                        ->orWhere('apellido_paterno', 'like', '%' . $query . '%')
+                        ->orWhere('apellido_materno', 'like', '%' . $query . '%');
                 });
                 break;
             case 'academia':
@@ -48,7 +57,27 @@ class DocenteBusquedaController extends Controller
                 });
                 break;
             default:
-                $materials->where('titulo', 'like', '%' . $query . '%');
+                // Búsqueda general (default) que incluye todos los filtros
+                $materials->where('titulo', 'like', '%' . $query . '%')
+                    ->orWhereHas('autor', function ($q) use ($query) {
+                        $q->where('nombre_autor', 'like', '%' . $query . '%')
+                            ->orWhere('apellido_paterno', 'like', '%' . $query . '%')
+                            ->orWhere('apellido_materno', 'like', '%' . $query . '%');
+                    })
+                    ->orWhereHas('docente', function ($q) use ($query) {
+                        $q->where('nombre_docente', 'like', '%' . $query . '%')
+                            ->orWhere('apellido_paterno', 'like', '%' . $query . '%')
+                            ->orWhere('apellido_materno', 'like', '%' . $query . '%');
+                    })
+                    ->orWhereHas('academia', function ($q) use ($query) {
+                        $q->where('nombre_academia', 'like', '%' . $query . '%');
+                    })
+                    ->orWhereHas('asignatura', function ($q) use ($query) {
+                        $q->where('nombre_asignatura', 'like', '%' . $query . '%');
+                    })
+                    ->orWhereHas('tags', function ($q) use ($query) {
+                        $q->where('nombre_tag', 'like', '%' . $query . '%');
+                    });
                 break;
         }
 
