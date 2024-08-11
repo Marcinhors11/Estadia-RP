@@ -7,10 +7,10 @@
         <form action="{{ route('docentes.materials.solicitar_baja', $material->id) }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="justificacion">Justificación</label>
-                <textarea name="justificacion" id="justificacion" class="form-control" rows="5" required></textarea>
+                <label for="justificacion">Justificación:</label>
+                <textarea name="justificacion" id="justificacion" class="form-control mt-2" rows="5" required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+            <button type="submit" class="btn btn-primary mt-3">Enviar Solicitud</button>
         </form>
     </div>
 @endsection

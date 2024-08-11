@@ -36,6 +36,10 @@
             <div class="form-floating m-auto mt-4 col-md-6 col-sm-6">
                 <input type="password" class="form-control" id="password" name="password" required placeholder="Password">
                 <label for="floatingInput">Contraseña</label>
+                <div id="passwordHelpBlock" class="form-text">
+                    Tu contraseña debe tener entre 8 y 16 caracteres, contener letras y números, y no debe contener
+                    espacios, caracteres especiales ni emojis.
+                </div>
             </div>
 
             <div class="form-floating m-auto mt-4 col-md-6 col-sm-6">

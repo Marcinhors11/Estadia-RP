@@ -252,15 +252,6 @@ class AdminMaterialController extends Controller
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        //Validar si ya existe un material con el mismo nombre
-        $materialExistente = Material::where('titulo', $request->titulo)
-            ->first();
-
-        //Si ya existe un material con el mismo nombre retorna un mensaje de error
-        if ($materialExistente) {
-            return redirect()->route('admin.materials.create')->withInput()->withErrors(['material_duplicado' => 'El material que intenta registrar ya existe.']);
-        }
-
         //Validar si el imput archivo esta vacio y regresar mensaje de error
         if (!$request->hasFile('archivo') && empty($request->enlace)) {
             return redirect()->back()->withInput()->withErrors(['archivo' => 'Debe subir un archivo o proporcionar un enlace.']);

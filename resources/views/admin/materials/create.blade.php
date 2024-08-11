@@ -13,14 +13,14 @@
             <div class="row">
                 <!--  Box Title  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="titulo">Título</label>
+                    <label for="titulo">Título<i style="color: red">*</i></label>
                     <input type="text" class="form-control" id="titulo" name="titulo" value="{{ old('titulo') }}"
                         required>
                 </div>
 
                 <!--  Box Autor  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="autor">Autor</label>
+                    <label for="autor">Autor<i style="color: red">*</i></label>
                     <select class="form-control" id="autor" name="autor_id" required>
                         <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($autores as $autor)
@@ -37,7 +37,7 @@
 
                 <!--  Box Date  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="fecha_publicacion">Fecha de Publicación</label>
+                    <label for="fecha_publicacion">Fecha de Publicación<i style="color: red">*</i></label>
                     <input type="date" class="form-control" id="fecha_publicacion" name="fecha_publicacion"
                         value="{{ old('fecha_publicacion') }}" required>
                 </div>
@@ -46,7 +46,7 @@
             <div class="row">
                 <!--  Box Idioma  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="idioma">Idioma</label>
+                    <label for="idioma">Idioma<i style="color: red">*</i></label>
                     <select name="idioma_id" id="idioma" class="form-control" required>
                         <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($idiomas as $idioma)
@@ -78,14 +78,14 @@
             <div class="row">
                 <!--  Box Tema  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="tema">Tema</label>
+                    <label for="tema">Tema<i style="color: red">*</i></label>
                     <input type="text" class="form-control" id="tema" name="tema" value="{{ old('tema') }}"
                         required>
                 </div>
 
                 <!--  Box Asignatura  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="asignatura">Asignatura</label>
+                    <label for="asignatura">Asignatura<i style="color: red">*</i></label>
                     <select name="asignatura_id" id="asignatura" class="form-control" required>
                         <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($asignaturas as $asignatura)
@@ -104,7 +104,7 @@
 
                 <!--  Box Academia  -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="academia">Academia</label>
+                    <label for="academia">Academia<i style="color: red">*</i></label>
                     <select name="academia_id" id="academia" class="form-control" required>
                         <option value="nuevo" class="text-secondary">Seleccionar</option>
                         @foreach ($academias as $academia)
@@ -126,14 +126,14 @@
             <div class="row">
                 <!-- Campo Archivo -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="archivo">Archivo</label>
+                    <label for="archivo">Archivo<i style="color: red">*</i></label>
                     <input type="file" name="archivo" id="archivo" class="form-control"
                         accept=".pdf,.docx,.pptx,.xlsx,.jpg,.png,.jpeg">
                 </div>
 
                 <!-- Campo Enlace -->
                 <div class="form-group col-md-4 m-auto mt-3 p-3">
-                    <label for="enlace">Enlace</label>
+                    <label for="enlace">Enlace<i style="color: red">*</i></label>
                     <input type="url" name="enlace" id="enlace" value="{{ old('enlace') }}"
                         class="form-control" placeholder="http://">
                 </div>
